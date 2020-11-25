@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Titlu = "New";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<h2>Adaugare echipa</h2>
+
+@model Task_Management_Platform.Models.Team
+
+<form method="post" action="/Teams/New">
+    @Html.Label("Nume", "Nume echipa")
+    <br />
+    @Html.TextBox("Nume", null, new { @class = "form-control" })
+    <br />
+    <br />
+    <button class="btn btn-sm btn-success" type="submit">Adauga echipa.</button>
+</form>

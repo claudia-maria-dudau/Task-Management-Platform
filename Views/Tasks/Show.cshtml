@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Show";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<a href="/Tasks/Index">Inapoi la taskuri</a>
+<br />
+
+@model Task_Management_Platform.Models.Task1
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Model.Title</div>
+
+    <div class="panel-body">
+        Descriere task: <p>@Model.Description</p>
+        <br /> 
+        Status: <strong>@Model.Status</strong>
+        <br />
+        <span class="label label-info">Perioada: @Model.DataStart - @Model.DataFin</span>
+        <br />
+        <hr>
+
+        <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
+
+        <form method="post" action="/Tasks/Delete/@Model.TaskId">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+            <button class="btn btn-danger pull-right" type="submit">Sterge task</button>
+        </form>
+    </div>
+</div>
+<br />
+
+<!-- comentarii -->
+@foreach (var comm in Model.Comments)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div>
+                    <p>@comm.Content</p>
+                    <small class="pull-right">@comm.DataAdaug</small>
+                </div>
+
+                <div style="display: inline-block; float : left; margin-right: 15px">
+                    <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
+                </div>
+
+                <div style="display: inline-block; float : left">
+                    <form method="post" action="/Comments/Delete/@comm.CommentId">
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                    </form>
+                </div>
+
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+    <hr />
+}
+
+<!-- adugare comentariu -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+            <div class="panel">
+                <form method="post" action="/Tasks/Show/@Model.TaskId">
+                    <div class="panel-body">
+                        
+                        <input type="hidden" name="TaskId" value="@Model.TaskId" />
+
+                        @Html.Label("Content", "Continut Comentariu")
+                        <br />
+                        @Html.TextArea("Content", null, new { @class = "form-control" })
+                        @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+                        <br />
+
+                        <button class="btn btn-success " type="submit">Adauga comentariu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<h2>Modificare task</h2>
+
+@model Task_Management_Platform.Models.Task1
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Tasks"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.TaskId)
+
+    @Html.Label("Title", "Titlu Task")
+    <br />
+    @Html.EditorFor(m => m.Title)
+    <br />
+    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("Description", "Descriere task")
+    <br />
+    @Html.Editor("Description")
+    <br />
+
+    @Html.HiddenFor(m => m.Status)
+    <br />
+
+    @Html.Label("DataStart", "Inceput task")
+    <br />
+    @Html.Editor("DataStart");
+    <br />
+    @Html.ValidationMessageFor(m => m.DataStart, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("DataFin", "Termen limita task")
+    <br />
+    @Html.Editor("DataFin");
+    <br />
+    @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-success" type="submit">Modifica task</button>
+}

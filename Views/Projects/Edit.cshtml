@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+<h1>@ViewBag.Message</h1>
+<h2>Editeaza proiect</h2>
+
+@model Task_Management_Platform.Models.Project
+
+
+<form method="post" action="/Projects/Edit/@Model.ProjectId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Hidden("ProjectId")
+    @Html.Hidden("TeamId")
+
+    @Html.Label("Nume", "Nume Proiect")
+    <br />
+    @Html.Editor("Nume")
+    <br />
+    <br />
+    @Html.Label("Descriere")
+    <br />
+    @Html.Editor("Descriere")
+    <br />
+    <br />
+    @Html.Label("DataInceput", "Data Inceput")
+    <br />
+    @Html.Editor("DataInceput")
+    <br />
+    <br />
+    @Html.Label("Deadline")
+    <br />
+    @Html.Editor("Deadline")
+    <br />
+    <br />
+    <button class="btn btn-success" type="submit">Modifica proiect.</button>
+</form>

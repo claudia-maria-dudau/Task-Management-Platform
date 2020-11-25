@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Titlu = "New";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<h2>Adaugare task</h2>
+
+@model Task_Management_Platform.Models.Task1
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Tasks"))
+{
+    @Html.Label("Title", "Titlu Task")
+    <br />
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("Description", "Descriere Task")
+    <br />
+    @Html.TextArea("Description", null, new { @class = "form-control" })
+    <br />
+
+    @Html.Hidden("Status", "Not Started", new { @class = "form-control" })
+    <br />
+
+    @Html.Label("DataStart", "Inceput task")
+    <br />
+    @Html.TextArea("DataStart", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.DataStart, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("DataFin", "Termen limita task")
+    <br />
+    @Html.TextArea("DataFin", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-sm btn-success" type="submit">Adauga task</button>
+}

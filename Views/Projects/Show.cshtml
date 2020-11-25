@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Show";
+}
+
+<h1>@ViewBag.Message</h1>
+@model Task_Management_Platform.Models.Project
+
+<a href="/Teams/Show/@Model.TeamId">Inapoi la echipa</a>
+<br />
+
+<div class="container">
+    <h2>@Model.Nume</h2>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div>
+            <p>@Model.Descriere</p>
+            <br />
+            <br/>
+        <small class="pull-right">@Model.DataInceput - @Model.Deadline</small>
+        </div>
+            <div style="display: inline-block; float : left; margin-right: 15px">
+                <a class="glyphicon glyphicon-pencil" href="/Projects/Edit/@Model.ProjectId"></a>
+            </div>
+
+            <div style="display: inline-block; float : left">
+                <form method="post" action="/Projects/Delete/@Model.ProjectId">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                    <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                </form>
+            </div>
+
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>
+<hr />

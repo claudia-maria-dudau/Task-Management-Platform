@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<h2>Echipe</h2>
+
+<a class="btn btn-primary" href="/Teams/New">Adauga echipa.</a>
+<br />
+
+@foreach (var team in ViewBag.Teams)
+{
+<div class="panel panel-default">
+    <div class="panel-heading">@team.Nume</div>
+    <div class="panel-body">
+        <span class="label label-info">Data inscriere:@team.DataInscriere</span>
+        <br />
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-sm btn btn-success" href="/Teams/Show/@team.TeamId">Afisare echipa.</a>
+    </div>
+</div>
+}

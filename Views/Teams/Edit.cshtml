@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<h2>Modificare echipa.</h2>
+
+@model Task_Management_Platform.Models.Team
+
+<form method="post" action="/Teams/Edit/@Model.TeamId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+   
+    @Html.Hidden("TeamId")
+
+    @Html.Label("Nume", "Nume Echipa")
+    <br />
+    @Html.Editor("Nume");
+    <br />
+    <br />
+    @Html.Label("DataInscriere", "Data Inscrierii")
+    <br />
+    @Html.Editor("DataInscriere");
+    <br />
+    <br />
+
+    <button class="btn btn-success" type="submit">Modifica echipa.</button>
+  </form>
