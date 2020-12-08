@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
+using System;
 using Task_Management_Platform.Models;
 
 [assembly: OwinStartupAttribute(typeof(Task_Management_Platform.Startup))]
@@ -14,10 +15,10 @@ namespace Task_Management_Platform
             ConfigureAuth(app);
 
             // Se apeleaza o metoda in care se adauga contul de administrator si rolurile aplicatiei
-               createAdminUserAndApplicationRoles();
+             CreateAdminUserAndApplicationRoles();
         }
 
-        private void createAdminUserAndApplicationRoles()
+        private void CreateAdminUserAndApplicationRoles()
         {
             ApplicationDbContext context = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));

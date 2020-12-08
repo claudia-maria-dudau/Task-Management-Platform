@@ -8,14 +8,14 @@
 <a href="/Tasks/Index">Inapoi la taskuri</a>
 <br />
 
-@model Task_Management_Platform.Models.Task1
+@model Task_Management_Platform.Models.Task
 
 <div class="panel panel-default">
     <div class="panel-heading">@Model.Title</div>
 
     <div class="panel-body">
         Descriere task: <p>@Model.Description</p>
-        <br /> 
+        <br />
         Status: <strong>@Model.Status</strong>
         <br />
         <span class="label label-info">Perioada: @Model.DataStart - @Model.DataFin</span>
@@ -23,7 +23,6 @@
         <hr>
 
         <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
-
         <form method="post" action="/Tasks/Delete/@Model.TaskId">
             @Html.HttpMethodOverride(HttpVerbs.Delete)
 

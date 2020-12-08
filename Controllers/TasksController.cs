@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,8 +32,16 @@ namespace Task_Management_Platform.Controllers
             if (TempData.ContainsKey("message"))
                 ViewBag.Message = TempData["message"];
 
-            Task1 task = db.Tasks.Find(id);
-            
+            Task task = db.Tasks.Find(id);
+            ViewBag.seteazaStatus = false;
+            if (User.IsInRole("Membru") || User.IsInRole("Admin"))
+            {
+                ViewBag.seteazaStatus = true;
+            }
+
+            ViewBag.esteAdmin = User.IsInRole("Admin");
+            ViewBag.utilizatorCurent = User.Identity.GetUserId();
+
             return View(task);
         }
 
@@ -54,12 +63,12 @@ namespace Task_Management_Platform.Controllers
                     return Redirect("/Tasks/Show/" + newComment.TaskId);
                 }
 
-                Task1 task = db.Tasks.Find(newComment.TaskId);
+                Task task = db.Tasks.Find(newComment.TaskId);
                 return View(task);
             }
             catch (Exception e)
             {
-                Task1 task = db.Tasks.Find(newComment.TaskId);
+                Task task = db.Tasks.Find(newComment.TaskId);
                 return View(task);
             }
         }
@@ -73,7 +82,7 @@ namespace Task_Management_Platform.Controllers
 
         //POST: adaugare task-ul nou in baza de date
         [HttpPost]
-        public ActionResult New(Task1 newTask)
+        public ActionResult New(Task newTask)
         {
             try
             {
@@ -99,20 +108,20 @@ namespace Task_Management_Platform.Controllers
         //GET: afisare formular de editare task
         public ActionResult Edit(int id)
         {
-            Task1 task = db.Tasks.Find(id);
+            Task task = db.Tasks.Find(id);
 
             return View(task);
         }
 
         //PUT: modificare task
         [HttpPut]
-        public ActionResult Edit(int id, Task1 editedTask)
+        public ActionResult Edit(int id, Task editedTask)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Task1 task = db.Tasks.Find(id);
+                    Task task = db.Tasks.Find(id);
 
                     if (TryUpdateModel(task))
                     {
@@ -135,13 +144,13 @@ namespace Task_Management_Platform.Controllers
                 return View(editedTask);
             }
         }
-
+        
         //DELETE
         //DELETE: stergerea unui task
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            Task1 task = db.Tasks.Find(id);
+            Task task = db.Tasks.Find(id);
 
             try
             {
