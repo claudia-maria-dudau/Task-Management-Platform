@@ -16,7 +16,7 @@ namespace Task_Management_Platform.Models
         //O echipa poate are mai multi membri
         //public virtual ICollection<Member> Members { get; set; }
         //O echipa poate dezvolta mai multe taskuri
-        public virtual ICollection<Task1> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         //O echipa poate dezvolta mai multe proiecte
         public virtual ICollection<Project> Projects { get; set; }
     }

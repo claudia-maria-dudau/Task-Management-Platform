@@ -17,6 +17,8 @@ namespace Task_Management_Platform.Controllers
             if (TempData.ContainsKey("message"))
                 ViewBag.Message = TempData["message"];
             var teams = db.Teams;
+            var tasks = db.Tasks;
+            ViewBag.Tasks = tasks;
             ViewBag.Teams = teams;
             return View();
         }

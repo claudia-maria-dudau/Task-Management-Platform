@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing.Printing;
@@ -15,15 +16,25 @@ namespace Task_Management_Platform.Controllers
 
         //EDIT
         //GET: afisare formular de editare comentariu
+        [Authorize(Roles = "Membru,Admin")]
         public ActionResult Edit(int id)
         {
             Comment comment = db.Comments.Find(id);
 
-            return View(comment);
+            if (comment.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
+            {
+                return View(comment);
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari";
+                return RedirectToAction("Index", "Tasks");
+            }
         }
 
         //PUT: modificare comentariu
         [HttpPut]
+        [Authorize(Roles = "Membru,Admin")]
         public ActionResult Edit(int id, Comment editedComment)
         {
             try
@@ -31,25 +42,26 @@ namespace Task_Management_Platform.Controllers
                 if (ModelState.IsValid)
                 {
                     Comment comment = db.Comments.Find(id);
-
-                    if (TryUpdateModel(comment))
+                    if (comment.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
                     {
-                        comment = editedComment;
-                        db.SaveChanges();
-                        TempData["message"] = "Task-ul a fost modificat cu succes!";
-
+                        if (TryUpdateModel(comment))
+                        {
+                            comment.Content = editedComment.Content;
+                            db.SaveChanges();
+                        }
                         return Redirect("/Tasks/Show/" + comment.TaskId);
                     }
-
-                    ViewBag.Message = "Task-ul a fost modificat cu succes!";
-                    return View(editedComment);
+                    else
+                    {
+                        TempData["message"] = "Nu aveti dreptul sa faceti modificari";
+                        return RedirectToAction("Index", "Tasks");
+                    }
                 }
-
-                return View(editedComment);
+                return RedirectToAction("Index", "Tasks");
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Task-ul a fost modificat cu succes!";
+                ViewBag.Message = "Comentariul a fost modificat cu succes!";
                 return View(editedComment);
             }
         }
@@ -57,17 +69,28 @@ namespace Task_Management_Platform.Controllers
         //DELETE
         //DELETE: stergerea unui comentariu
         [HttpDelete]
+        [Authorize(Roles = "Membru,Admin")]
         public ActionResult Delete(int id)
         {
             Comment comment = db.Comments.Find(id);
 
             try
             {
-                db.Comments.Remove(comment);
-                db.SaveChanges();
-                TempData["message"] = "Task-ul a fost sters cu success!";
+                if (comment.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
+                {
 
-                return Redirect("/Tasks/Show/" + comment.TaskId);
+                    db.Comments.Remove(comment);
+                    db.SaveChanges();
+                    TempData["message"] = "Comentariul a fost sters cu success!";
+
+                    return Redirect("/Tasks/Show/" + comment.TaskId);
+                }
+                else
+                {
+                    TempData["message"] = "Nu aveti dreptul sa faceti modificari";
+                    return RedirectToAction("Index", "Tasks");
+                }
+                return RedirectToAction("Index", "Tasks");
             }
             catch (Exception e)
             {

@@ -33,34 +33,52 @@
 <!-- proiecte-->
 @foreach (var proj in Model.Projects)
 {
-<div class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
-
-        <div class="col-md-8">
-            <div>
-                <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
-                <br />
-
-                <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
-            </div>
-            <div style="display: inline-block; float : left; margin-right: 15px">
-                <a class="glyphicon glyphicon-pencil" href="/Projects/Edit/@proj.ProjectId"></a>
-            </div>
-
-            <div style="display: inline-block; float : left">
-                <form method="post" action="/Projects/Delete/@proj.ProjectId">
-                    @Html.HttpMethodOverride(HttpVerbs.Delete)
-
-                    <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
-                </form>
-            </div>
-
+    <div class="container">
+        <div class="row">
             <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div>
+                    <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
+                    <br />
+
+                    <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
+                </div>
+                <div style="display: inline-block; float : left; margin-right: 15px">
+                    <a class="glyphicon glyphicon-pencil" href="/Projects/Edit/@proj.ProjectId"></a>
+                </div>
+
+                <div style="display: inline-block; float : left">
+                    <form method="post" action="/Projects/Delete/@proj.ProjectId">
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                    </form>
+                </div>
+
+                <div class="col-md-2"></div>
+            </div>
         </div>
     </div>
-</div>
 }
 
 <a class="btn btn-success pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
 <br />
+
+<!-- taskuri-->
+@foreach (var task in Model.Tasks)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div>
+                    <p><a href="/Tasks/Show/@task.Title">@task.Title</a></p>
+                    <br />
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+}
