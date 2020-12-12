@@ -7,10 +7,9 @@
 
 <h2>Adaugare task</h2>
 
-@model Task_Management_Platform.Models.Task1
+@model Task_Management_Platform.Models.Task
 
-@using (Html.BeginForm(actionName: "New", controllerName: "Tasks"))
-{
+<form method="post" action="/Tasks/New/@Model.TaskId">
     @Html.Label("Title", "Titlu Task")
     <br />
     @Html.TextBox("Title", null, new { @class = "form-control" })
@@ -40,5 +39,7 @@
     <br />
     <br />
 
+    @Html.HiddenFor(m => m.TeamId)
+
     <button class="btn btn-sm btn-success" type="submit">Adauga task</button>
-}
+</form>

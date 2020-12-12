@@ -11,7 +11,6 @@ namespace Task_Management_Platform.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "Task_Management_Platform.Models.ApplicationDbContext";
         }
 
         protected override void Seed(Task_Management_Platform.Models.ApplicationDbContext context)

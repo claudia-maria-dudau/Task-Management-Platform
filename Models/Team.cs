@@ -13,11 +13,19 @@ namespace Task_Management_Platform.Models
         public string Nume { get; set; }
         public DateTime DataInscriere { get; set; }
         public int ProjectId { get; set; }
-        //O echipa poate are mai multi membri
-        //public virtual ICollection<Member> Members { get; set; }
-        //O echipa poate dezvolta mai multe taskuri
+
+        public string UserId { get; set; }
+
+        //o echipa este creata de catre un organizator
+        public virtual ApplicationUser Organizator { get; set; }
+
+        //o echipa poate are mai multi membri
+        public virtual ICollection<ApplicationUser> Members { get; set; }
+        
+        //o echipa poate dezvolta mai multe taskuri
         public virtual ICollection<Task> Tasks { get; set; }
-        //O echipa poate dezvolta mai multe proiecte
+        
+        //o echipa poate dezvolta mai multe proiecte
         public virtual ICollection<Project> Projects { get; set; }
     }
 }

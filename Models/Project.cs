@@ -15,8 +15,12 @@ namespace Task_Management_Platform.Models
         public int TeamId { get; set; }
         public DateTime Deadline { get; set; }
         public DateTime DataInceput { get; set; }
-        //Un proiect apartine unei echipe
+        public string UserId { get; set; }
 
+        //un proiect apartine unei echipe
         public virtual Team Team { get; set; }
+
+        //un proiect este creat de catre un organizator
+        public virtual ApplicationUser Organizator { get; set; }
     }
 }

@@ -26,6 +26,8 @@ namespace Task_Management_Platform.Models
 
         [Required(ErrorMessage = "Data de final este obligatorie.")]
         public DateTime DataFin { get; set; }
+        public int TeamId { get; set; }
+
 
         //foreign key
         //un task apartine unei echipe
@@ -33,5 +35,8 @@ namespace Task_Management_Platform.Models
 
         //un task poate avea unul sau mai multe comentarii
         public virtual ICollection<Comment> Comments { get; set; }
+
+        //un task este creat de catre un organizator
+        public virtual ApplicationUser Organizator { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,19 +11,7 @@ namespace Task_Management_Platform.Controllers
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
 
-        //INDEX
-        // GET: Tasks (afisarea tuturor taskurilor)
-        public ActionResult Index()
-        {
-            if (TempData.ContainsKey("message"))
-                ViewBag.Message = TempData["message"];
-
-            var tasks = db.Tasks;
-            ViewBag.Tasks = tasks;
-
-            return View();
-        }
-
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         //SHOW
         //GET: afisarea unui singur task
         public ActionResult Show(int id)
@@ -45,12 +32,14 @@ namespace Task_Management_Platform.Controllers
             return View(task);
         }
 
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         // pt COMMENTS
         //POST: adaugare cometariu-ul nou in baza de date
         [HttpPost]
         public ActionResult Show(Comment newComment)
         {
             newComment.DataAdaug = DateTime.Now;
+            newComment.UserId = User.Identity.GetUserId();
 
             try
             {
@@ -73,78 +62,105 @@ namespace Task_Management_Platform.Controllers
             }
         }
 
+        [Authorize(Roles = "Organizator,Admin")]
         //NEW
         //GET: afisare formular adaugare task
         public ActionResult New()
-        { 
+        {
             return View();
         }
 
         //POST: adaugare task-ul nou in baza de date
+        [Authorize(Roles = "Organizator,Admin")]
         [HttpPost]
-        public ActionResult New(Task newTask)
+        public ActionResult Show(Task newTask)
         {
             try
             {
+                newTask.UserId = User.Identity.GetUserId();
                 if (ModelState.IsValid)
                 {
                     db.Tasks.Add(newTask);
                     db.SaveChanges();
                     TempData["message"] = "Taskul a fost adaugat cu success!";
 
-                    return RedirectToAction("Index");
+                    ViewBag.esteAdmin = User.IsInRole("Admin");
+                    ViewBag.utilizatorCurent = User.Identity.GetUserId();
+                    return Redirect("Teams/Show/" + newTask.TeamId);
                 }
 
                 return View(newTask);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.Message = "Nu s-a putut adauga task-ul!";
                 return View(newTask);
             }
         }
 
+        [Authorize(Roles = "Organizator,Admin")]
         //EDIT
         //GET: afisare formular de editare task
         public ActionResult Edit(int id)
         {
             Task task = db.Tasks.Find(id);
 
-            return View(task);
+            if (User.Identity.GetUserId() == task.UserId || User.IsInRole("Admin"))
+            {
+                return View(task);
+            }
+
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
+                return Redirect("Teams/Show/" + task.TeamId);
+            }
         }
 
+        [Authorize(Roles = "Organizator,Admin")]
         //PUT: modificare task
         [HttpPut]
         public ActionResult Edit(int id, Task editedTask)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (User.Identity.GetUserId() == editedTask.UserId || User.IsInRole("Admin"))
                 {
-                    Task task = db.Tasks.Find(id);
-
-                    if (TryUpdateModel(task))
+                    if (ModelState.IsValid)
                     {
-                        task = editedTask;
-                        db.SaveChanges();
-                        TempData["message"] = "Task-ul a fost modificat cu succes!";
+                        Task task = db.Tasks.Find(id);
 
-                        return Redirect("/Tasks/Show/" + id);
+                        if (TryUpdateModel(task))
+                        {
+                            task = editedTask;
+                            db.SaveChanges();
+                            TempData["message"] = "Task-ul a fost modificat cu succes!";
+
+                            return Redirect("/Tasks/Show/" + id);
+                        }
+
+                        ViewBag.Message = "Nu s-a putut edita task-ul!";
+                        return View(editedTask);
                     }
 
-                    ViewBag.Message = "Nu s-a putut edita task-ul!";
                     return View(editedTask);
                 }
 
-                return View(editedTask);
+                else
+                {
+                    TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
+                    return Redirect("Teams/Show/" + editedTask.TeamId);
+                }
             }
-            catch(Exception e)
+
+            catch (Exception e)
             {
                 ViewBag.Message = "Nu s-a putut edita task-ul!";
                 return View(editedTask);
             }
         }
-        
+
+        [Authorize(Roles = "Organizator,Admin")]
         //DELETE
         //DELETE: stergerea unui task
         [HttpDelete]
@@ -154,11 +170,20 @@ namespace Task_Management_Platform.Controllers
 
             try
             {
-                db.Tasks.Remove(task);
-                db.SaveChanges();
-                TempData["message"] = "Task-ul a fost sters cu success!";
+                if (User.Identity.GetUserId() == task.UserId || User.IsInRole("Admin"))
+                {
+                    db.Tasks.Remove(task);
+                    db.SaveChanges();
+                    TempData["message"] = "Task-ul a fost sters cu success!";
 
-                return RedirectToAction("Index");
+                    return Redirect("Teams/Show/" + task.TeamId);
+                }
+
+                else
+                {
+                    TempData["message"] = "Nu aveti dreptul sa stergeti un task care nu va apartine!";
+                    return Redirect("Teams/Show/" + task.TeamId);
+                }
             }
             catch (Exception e)
             { 

@@ -64,10 +64,22 @@ namespace Task_Management_Platform.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Numele este obligatoriu.")]
+        [Display(Name = "Prenume")]
+        public string Nume { get; set; }
+
+        [Required(ErrorMessage = "Prenumele este obligatoriu.")]
+        [Display(Name = "Prenume")]
+        public string Prenume { get; set; }
+
+        [Required(ErrorMessage = "Email-ul este obligatoriu")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Phone]
+        [Display(Name = "PhoneNumber")]
+        public string PhoneNumber { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

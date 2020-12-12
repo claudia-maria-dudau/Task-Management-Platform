@@ -21,10 +21,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Afisare Echipe", "Index", "Teams")</li>
-                    <li>@Html.ActionLink("Adaugare Echipa", "New", "Teams")</li>
-                    <li>@Html.ActionLink("Afisare Proiecte", "Index", "Projects")</li>
-                    <li>@Html.ActionLink("Adaugare Proiect", "New", "Projects")</li>
+                    @if (User.IsInRole("User") || User.IsInRole("Membru") || User.IsInRole("Organizator") || User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Afisare Echipe", "Index", "Teams")</li>
+                        <li>@Html.ActionLink("Creare Echipa", "New", "Teams")</li>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Afisare Utilizatori", "Index", "Users")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

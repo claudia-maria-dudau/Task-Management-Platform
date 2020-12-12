@@ -23,5 +23,8 @@ namespace Task_Management_Platform.Models
         //foreign key
         //un comntariu este asociat unui task
         public virtual Task Task { get; set; }
+
+        //un comentariu este creat de catre un membru
+        public virtual ApplicationUser Member { get; set; }
     }
 }
