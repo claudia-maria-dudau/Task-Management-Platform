@@ -9,7 +9,7 @@ namespace Task_Management_Platform.Models
     public class Tasks
     {
         [Key]
-        public int TaskId {get; set; }
+        public int TaskId { get; set; }
 
         [Required(ErrorMessage = "Titlul task-ului este obligatoriu.")]
         [StringLength(100, ErrorMessage = "Titlul nu poate avea mai mult de 100 de caractre.")]
