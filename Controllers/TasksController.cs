@@ -20,7 +20,7 @@ namespace Task_Management_Platform.Controllers
             if (TempData.ContainsKey("message"))
                 ViewBag.Message = TempData["message"];
 
-            Tasks task = db.Tasks.Find(id);
+            Task task = db.Tasks.Find(id);
             ViewBag.seteazaStatus = false;
             if (User.IsInRole("Membru") || User.IsInRole("Admin"))
             {
@@ -54,12 +54,12 @@ namespace Task_Management_Platform.Controllers
                     return Redirect("/Tasks/Show/" + newComment.TaskId);
                 }
 
-                Tasks task = db.Tasks.Find(newComment.TaskId);
+                Task task = db.Tasks.Find(newComment.TaskId);
                 return View(task);
             }
             catch (Exception e)
             {
-                Tasks task = db.Tasks.Find(newComment.TaskId);
+                Task task = db.Tasks.Find(newComment.TaskId);
                 return View(task);
             }
         }
@@ -76,7 +76,7 @@ namespace Task_Management_Platform.Controllers
         //POST: adaugare task-ul nou in baza de date
         [Authorize(Roles = "Organizator,Admin")]
         [HttpPost]
-        public ActionResult New(Tasks newTask)
+        public ActionResult New(Task newTask)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace Task_Management_Platform.Controllers
         [Authorize(Roles = "Organizator,Admin")]
         public ActionResult Edit(int id)
         {
-            Tasks task = db.Tasks.Find(id);
+            Task task = db.Tasks.Find(id);
 
             if (User.Identity.GetUserId() == task.UserId || User.IsInRole("Admin"))
             {
@@ -127,7 +127,7 @@ namespace Task_Management_Platform.Controllers
         //PUT: modificare task
         [Authorize(Roles = "Organizator,Admin")]
         [HttpPut]
-        public ActionResult Edit(int id, Tasks editedTask)
+        public ActionResult Edit(int id, Task editedTask)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace Task_Management_Platform.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        Tasks task = db.Tasks.Find(id);
+                        Task task = db.Tasks.Find(id);
 
                         if (TryUpdateModel(task))
                         {
@@ -173,7 +173,7 @@ namespace Task_Management_Platform.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            Tasks task = db.Tasks.Find(id);
+            Task task = db.Tasks.Find(id);
 
             try
             {

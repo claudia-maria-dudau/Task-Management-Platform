@@ -23,7 +23,7 @@ namespace Task_Management_Platform.Models
         public virtual ICollection<ApplicationUser> Users { get; set; }
         
         //o echipa poate dezvolta mai multe taskuri
-        public virtual ICollection<Tasks> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         
         //o echipa poate dezvolta mai multe proiecte
         public virtual ICollection<Project> Projects { get; set; }

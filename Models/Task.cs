@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Task_Management_Platform.Models
 {
-    public class Tasks
+    public class Task
     {
         [Key]
         public int TaskId { get; set; }
