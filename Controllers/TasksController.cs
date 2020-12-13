@@ -82,8 +82,8 @@ namespace Task_Management_Platform.Controllers
             {
                 newTask.Status = "Not Started";
                 newTask.UserId = User.Identity.GetUserId();
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     db.Tasks.Add(newTask);
                     db.SaveChanges();
                     TempData["message"] = "Taskul a fost adaugat cu success!";
@@ -92,14 +92,14 @@ namespace Task_Management_Platform.Controllers
                     ViewBag.esteMembru = User.IsInRole("Membru");
                     ViewBag.utilizatorCurent = User.Identity.GetUserId();
                     return Redirect("/Teams/Show/" + newTask.TeamId);
-                }
+                //}
 
                 ViewBag.Message = "Nu s-a putut adauga task-ul!";
                 return View(newTask);
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Nu s-a putut adauga task-ul!";
+                ViewBag.Message = e.Message;//"Nu s-a putut adauga task-ul!";
                 return View(newTask);
             }
         }
