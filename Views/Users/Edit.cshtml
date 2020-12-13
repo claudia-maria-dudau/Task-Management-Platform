@@ -1,8 +1,6 @@
 ﻿@model Task_Management_Platform.Models.ApplicationUser
 
 @{
-    /**/
-
     ViewBag.Title = "Editare rol utilizator";
 }
 
@@ -10,23 +8,9 @@
     <li><h3>@ViewBag.Title</h3></li>
 </ol>
 
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Users", routeValues: new { id = @Model.Id() }))
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Users", routeValues: new { id = @Model.Id }))
 {
     @Html.HttpMethodOverride(HttpVerbs.Put)
-    <br />
-
-    <i class="glyphicon glyphicon-user"></i>
-    @Html.Label("Nume", "Nume utilizator", new { @class = "" })
-    <br />
-    @Html.EditorFor(m => m.Nume)
-    <br />
-    <br />
-
-    <i class="glyphicon glyphicon-user"></i>
-    @Html.Label("Prenume", "Prenume utilizator", new { @class = "" })
-    <br />
-    @Html.EditorFor(m => m.Prenume)
-    <br />
     <br />
 
     <i class="glyphicon glyphicon-envelope"></i>

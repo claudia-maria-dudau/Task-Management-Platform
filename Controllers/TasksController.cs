@@ -11,9 +11,10 @@ namespace Task_Management_Platform.Controllers
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
 
-        [Authorize(Roles = "Membru,Organizator,Admin")]
+
         //SHOW
         //GET: afisarea unui singur task
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult Show(int id)
         {
             if (TempData.ContainsKey("message"))
@@ -27,14 +28,15 @@ namespace Task_Management_Platform.Controllers
             }
 
             ViewBag.esteAdmin = User.IsInRole("Admin");
+            ViewBag.esteOrganizator = User.IsInRole("Organizator");
             ViewBag.utilizatorCurent = User.Identity.GetUserId();
 
             return View(task);
         }
 
-        [Authorize(Roles = "Membru,Organizator,Admin")]
         // pt COMMENTS
         //POST: adaugare cometariu-ul nou in baza de date
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         [HttpPost]
         public ActionResult Show(Comment newComment)
         {
@@ -62,9 +64,10 @@ namespace Task_Management_Platform.Controllers
             }
         }
 
-        [Authorize(Roles = "Organizator,Admin")]
+
         //NEW
         //GET: afisare formular adaugare task
+        [Authorize(Roles = "Organizator,Admin")]
         public ActionResult New()
         {
             return View();
@@ -73,10 +76,11 @@ namespace Task_Management_Platform.Controllers
         //POST: adaugare task-ul nou in baza de date
         [Authorize(Roles = "Organizator,Admin")]
         [HttpPost]
-        public ActionResult Show(Tasks newTask)
+        public ActionResult New(Tasks newTask)
         {
             try
             {
+                newTask.Status = "Not Started";
                 newTask.UserId = User.Identity.GetUserId();
                 if (ModelState.IsValid)
                 {
@@ -85,10 +89,12 @@ namespace Task_Management_Platform.Controllers
                     TempData["message"] = "Taskul a fost adaugat cu success!";
 
                     ViewBag.esteAdmin = User.IsInRole("Admin");
+                    ViewBag.esteMembru = User.IsInRole("Membru");
                     ViewBag.utilizatorCurent = User.Identity.GetUserId();
-                    return Redirect("Teams/Show/" + newTask.TeamId);
+                    return Redirect("/Teams/Show/" + newTask.TeamId);
                 }
 
+                ViewBag.Message = "Nu s-a putut adauga task-ul!";
                 return View(newTask);
             }
             catch (Exception e)
@@ -98,9 +104,10 @@ namespace Task_Management_Platform.Controllers
             }
         }
 
-        [Authorize(Roles = "Organizator,Admin")]
+        
         //EDIT
         //GET: afisare formular de editare task
+        [Authorize(Roles = "Organizator,Admin")]
         public ActionResult Edit(int id)
         {
             Tasks task = db.Tasks.Find(id);
@@ -113,12 +120,12 @@ namespace Task_Management_Platform.Controllers
             else
             {
                 TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
-                return Redirect("Teams/Show/" + task.TeamId);
+                return Redirect("/Teams/Show/" + task.TeamId);
             }
         }
 
-        [Authorize(Roles = "Organizator,Admin")]
         //PUT: modificare task
+        [Authorize(Roles = "Organizator,Admin")]
         [HttpPut]
         public ActionResult Edit(int id, Tasks editedTask)
         {
@@ -149,7 +156,7 @@ namespace Task_Management_Platform.Controllers
                 else
                 {
                     TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
-                    return Redirect("Teams/Show/" + editedTask.TeamId);
+                    return Redirect("/Teams/Show/" + editedTask.TeamId);
                 }
             }
 
@@ -160,9 +167,9 @@ namespace Task_Management_Platform.Controllers
             }
         }
 
-        [Authorize(Roles = "Organizator,Admin")]
         //DELETE
         //DELETE: stergerea unui task
+        [Authorize(Roles = "Organizator,Admin")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -176,13 +183,13 @@ namespace Task_Management_Platform.Controllers
                     db.SaveChanges();
                     TempData["message"] = "Task-ul a fost sters cu success!";
 
-                    return Redirect("Teams/Show/" + task.TeamId);
+                    return Redirect("/Teams/Show/" + task.TeamId);
                 }
 
                 else
                 {
                     TempData["message"] = "Nu aveti dreptul sa stergeti un task care nu va apartine!";
-                    return Redirect("Teams/Show/" + task.TeamId);
+                    return Redirect("/Teams/Show/" + task.TeamId);
                 }
             }
             catch (Exception e)

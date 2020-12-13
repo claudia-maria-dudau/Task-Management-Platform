@@ -33,7 +33,7 @@ namespace Task_Management_Platform.Controllers
             ViewBag.utilizatorCurent = User.Identity.GetUserId();
 
             //obtinem rolul curent
-            var roleName = db.Roles.Find(user.Roles.FirstOrDefault().RoleId);
+            var roleName = db.Roles.Find(user.Roles.FirstOrDefault().RoleId).Name;
             ViewBag.roleName = roleName;
 
             return View(user);

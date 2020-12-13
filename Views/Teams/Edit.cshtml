@@ -13,15 +13,11 @@
     @Html.HttpMethodOverride(HttpVerbs.Put)
    
     @Html.Hidden("TeamId")
+    @Html.Hidden("UserId")
 
     @Html.Label("Nume", "Nume Echipa")
     <br />
-    @Html.Editor("Nume");
-    <br />
-    <br />
-    @Html.Label("DataInscriere", "Data Inscrierii")
-    <br />
-    @Html.Editor("DataInscriere");
+    @Html.Editor("Nume")
     <br />
     <br />
 

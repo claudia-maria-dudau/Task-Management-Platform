@@ -16,7 +16,7 @@ namespace Task_Management_Platform.Controllers
 
         //EDIT
         //GET: afisare formular de editare comentariu
-        [Authorize(Roles = "Membru,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult Edit(int id)
         {
             Comment comment = db.Comments.Find(id);
@@ -34,7 +34,7 @@ namespace Task_Management_Platform.Controllers
 
         //PUT: modificare comentariu
         [HttpPut]
-        [Authorize(Roles = "Membru,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult Edit(int id, Comment editedComment)
         {
             try
@@ -69,7 +69,7 @@ namespace Task_Management_Platform.Controllers
         //DELETE
         //DELETE: stergerea unui comentariu
         [HttpDelete]
-        [Authorize(Roles = "Membru,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult Delete(int id)
         {
             Comment comment = db.Comments.Find(id);
@@ -90,7 +90,6 @@ namespace Task_Management_Platform.Controllers
                     TempData["message"] = "Nu aveti dreptul sa faceti modificari";
                     return RedirectToAction("Index", "Tasks");
                 }
-                return RedirectToAction("Index", "Tasks");
             }
             catch (Exception e)
             {

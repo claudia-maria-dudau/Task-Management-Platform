@@ -21,7 +21,7 @@
         <br />
         <hr>
 
-        @if (Model.UserId == ViewBag.utilzatorCurent || ViewBag.esteAdmin)
+        @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
         {
             <a class="btn btn-success pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
 
@@ -30,19 +30,22 @@
 
                 <button class="btn btn-danger pull-right" type="submit">Sterge echipa</button>
             </form>
+
+            <br />
+            <br />
         }
 
         @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
-            <br />
-            <br />
             <a class="btn btn-info pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
+            
+            <br />
+            <br />
         }
 
         @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
-            <br />
-            <br />
+
             <a class="btn btn-info pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
             <br />
         }
@@ -97,7 +100,7 @@
 
             <div class="col-md-8">
                 <div>
-                    <p><a href="/Tasks/Show/@task.Title">@task.Title</a></p>
+                    <p><a href="/Tasks/Show/@task.TaskId">@task.Title</a></p>
                     <br />
 
                     Creat de: <p>@task.User.UserName</p>

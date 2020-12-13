@@ -14,7 +14,7 @@ namespace Task_Management_Platform.Controllers
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
 
-        [Authorize(Roles = "User,Member,Organizator,Admin")]
+        [Authorize(Roles = "User,Membru,Organizator,Admin")]
         // GET: Teams
         public ActionResult Index()
         {
@@ -26,14 +26,18 @@ namespace Task_Management_Platform.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Member,Organizator,Admin")]
+        [Authorize(Roles = "User,Membru,Organizator,Admin")]
         public ActionResult Show(int id)
         {
             if (TempData.ContainsKey("message"))
                 ViewBag.Message = TempData["message"];
 
             Team team = db.Teams.Find(id);
-            bool apartine = false;
+            /*bool apartine = false;
+
+            if (team.UserId == User.Identity.GetUserId())
+                apartine = true;
+
             foreach (ApplicationUser member in team.Users)
             {
                 if (member.Id == User.Identity.GetUserId())
@@ -43,29 +47,29 @@ namespace Task_Management_Platform.Controllers
             }
 
             if (apartine || User.IsInRole("Admin"))
-            {
+            {*/
                 ViewBag.esteMembru = User.IsInRole("Membru");
                 ViewBag.esteOrganizator = User.IsInRole("Organizator");
                 ViewBag.esteAdmin = User.IsInRole("Admin");
                 ViewBag.utilizatorCurent = User.Identity.GetUserId();
                 return View(team);
-            }
+            /*}
 
             else
             {
                 TempData["message"] = "Nu aveti dreptul de a viziona detaliile despre o echipa din care nu faceti parte!";
                 return RedirectToAction("Index");
-            }
+            }*/
         }
 
 
-        [Authorize(Roles = "User,Member,Organizator,Admin")]
+        [Authorize(Roles = "User,Membru,Organizator,Admin")]
         public ActionResult New()
         {
             return View();
         }
 
-        [Authorize(Roles = "Organizator,Admin")]
+        [Authorize(Roles = "User,Membru,Organizator,Admin")]
         [HttpPost]
         public ActionResult New(Team newTeam)
         {
@@ -122,7 +126,7 @@ namespace Task_Management_Platform.Controllers
         //din formular in baza de date
         [Authorize(Roles = "Organizator,Admin")]
         [HttpPut]
-        public ActionResult Edit(int id,Team teamReq)
+        public ActionResult Edit(int id, Team teamReq)
         {
             try
             {
@@ -137,20 +141,20 @@ namespace Task_Management_Platform.Controllers
                         return Redirect("/Teams/Show/" + id);
                     }
 
-                    else
-                    {
-                        TempData["message"] = "Nu aveti dreptul de a edita o echipa din care nu faceti parte!";
-                        return RedirectToAction("Index");
-                    }
+                    ViewBag.message = "Echipa nu exista sau nu se poate edita!";
+                    return View(teamReq);
                 }
-
-            }catch(Exception e)
+                else
+                {
+                    TempData["message"] = "Nu aveti dreptul de a edita o echipa din care nu faceti parte!";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch(Exception e)
             {
                 ViewBag.message = "Echipa nu exista sau nu se poate edita!";
                 return View(teamReq);
             }
-            ViewBag.message = "Echipa nu exista sau nu se poate edita!";
-            return View(teamReq);
         }
 
         [Authorize(Roles = "Organizator,Admin")]

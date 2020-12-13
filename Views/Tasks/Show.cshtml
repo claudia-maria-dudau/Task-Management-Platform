@@ -5,10 +5,9 @@
 
 <h1>@ViewBag.Message</h1>
 
-<a href="/Tasks/Index">Inapoi la taskuri</a>
-<br />
-
 @model Task_Management_Platform.Models.Tasks
+<a href="/Teams/Show/@Model.TeamId">Inapoi la taskuri</a>
+<br />
 
 <div class="panel panel-default">
     <div class="panel-heading">@Model.Title</div>
@@ -24,12 +23,15 @@
         <br />
         <hr>
 
-        <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
-        <form method="post" action="/Tasks/Delete/@Model.TaskId">
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
+        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+        {
+            <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
+            <form method="post" action="/Tasks/Delete/@Model.TaskId">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-            <button class="btn btn-danger pull-right" type="submit">Sterge task</button>
-        </form>
+                <button class="btn btn-danger pull-right" type="submit">Sterge task</button>
+            </form>
+        }
     </div>
 </div>
 <br />
@@ -45,7 +47,7 @@
                 <div>
                     <p>@comm.Content</p>
                     <small class="pull-right">@comm.DataAdaug</small>
-                    <strong>@comm.Member.UserName</strong>
+                    <strong>@comm.User.UserName</strong>
                 </div>
 
                 @if (comm.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)

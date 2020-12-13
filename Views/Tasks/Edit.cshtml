@@ -14,6 +14,8 @@
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
     @Html.HiddenFor(m => m.TaskId)
+    @Html.HiddenFor(m => m.TeamId)
+    @Html.HiddenFor(m => m.UserId)
 
     @Html.Label("Title", "Titlu Task")
     <br />

@@ -14,14 +14,14 @@ namespace Task_Management_Platform.Controllers
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
 
-        [Authorize(Roles = "Member,Organizator,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult New(int Id)
         {
             ViewBag.TeamId = Id;
             return View();
         }
 
-        [Authorize(Roles = "Member,Organizator,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         [HttpPost]
         public ActionResult New(Project project)
         {
@@ -51,7 +51,7 @@ namespace Task_Management_Platform.Controllers
             }
         }
 
-        [Authorize(Roles = "Member,Organizator,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult Show(int id)
         {
             if (TempData.ContainsKey("message"))
