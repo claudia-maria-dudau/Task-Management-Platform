@@ -13,12 +13,14 @@ namespace Task_Management_Platform.Migrations
                     {
                         CommentId = c.Int(nullable: false, identity: true),
                         Content = c.String(nullable: false),
-                        UserId = c.String(),
+                        UserId = c.String(maxLength: 128),
                         DataAdaug = c.DateTime(nullable: false),
                         TaskId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CommentId)
                 .ForeignKey("dbo.Tasks", t => t.TaskId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId)
                 .Index(t => t.TaskId);
             
             CreateTable(
@@ -28,15 +30,17 @@ namespace Task_Management_Platform.Migrations
                         TaskId = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false, maxLength: 100),
                         Description = c.String(),
-                        UserId = c.String(),
+                        UserId = c.String(maxLength: 128),
                         Status = c.String(),
                         DataStart = c.DateTime(nullable: false),
                         DataFin = c.DateTime(nullable: false),
-                        Team_TeamId = c.Int(),
+                        TeamId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.TaskId)
-                .ForeignKey("dbo.Teams", t => t.Team_TeamId)
-                .Index(t => t.Team_TeamId);
+                .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId)
+                .Index(t => t.TeamId);
             
             CreateTable(
                 "dbo.Teams",
@@ -46,8 +50,11 @@ namespace Task_Management_Platform.Migrations
                         Nume = c.String(),
                         DataInscriere = c.DateTime(nullable: false),
                         ProjectId = c.Int(nullable: false),
+                        UserId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.TeamId);
+                .PrimaryKey(t => t.TeamId)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.Projects",
@@ -59,33 +66,13 @@ namespace Task_Management_Platform.Migrations
                         TeamId = c.Int(nullable: false),
                         Deadline = c.DateTime(nullable: false),
                         DataInceput = c.DateTime(nullable: false),
+                        UserId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ProjectId)
                 .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
-                .Index(t => t.TeamId);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.TeamId)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -103,9 +90,12 @@ namespace Task_Management_Platform.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        Team_TeamId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
+                .ForeignKey("dbo.Teams", t => t.Team_TeamId)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
+                .Index(t => t.Team_TeamId);
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -132,31 +122,64 @@ namespace Task_Management_Platform.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Comments", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Tasks", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "Team_TeamId", "dbo.Teams");
+            DropForeignKey("dbo.Teams", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Tasks", "TeamId", "dbo.Teams");
+            DropForeignKey("dbo.Projects", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Tasks", "Team_TeamId", "dbo.Teams");
             DropForeignKey("dbo.Projects", "TeamId", "dbo.Teams");
             DropForeignKey("dbo.Comments", "TaskId", "dbo.Tasks");
-            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", new[] { "Team_TeamId" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.Projects", new[] { "UserId" });
             DropIndex("dbo.Projects", new[] { "TeamId" });
-            DropIndex("dbo.Tasks", new[] { "Team_TeamId" });
+            DropIndex("dbo.Teams", new[] { "UserId" });
+            DropIndex("dbo.Tasks", new[] { "TeamId" });
+            DropIndex("dbo.Tasks", new[] { "UserId" });
             DropIndex("dbo.Comments", new[] { "TaskId" });
+            DropIndex("dbo.Comments", new[] { "UserId" });
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetRoles");
             DropTable("dbo.Projects");
             DropTable("dbo.Teams");
             DropTable("dbo.Tasks");
