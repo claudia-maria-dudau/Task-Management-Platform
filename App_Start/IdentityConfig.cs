@@ -16,19 +16,19 @@ namespace Task_Management_Platform
 {
     public class EmailService : IIdentityMessageService
     {
-        public System.Threading.Tasks.Task SendAsync(IdentityMessage message)
+        public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return System.Threading.Tasks.Task.FromResult(0);
+            return Task.FromResult(0);
         }
     }
 
     public class SmsService : IIdentityMessageService
     {
-        public System.Threading.Tasks.Task SendAsync(IdentityMessage message)
+        public Task SendAsync(IdentityMessage message)
         {
             // Plug in your SMS service here to send a text message.
-            return System.Threading.Tasks.Task.FromResult(0);
+            return Task.FromResult(0);
         }
     }
 
@@ -40,7 +40,7 @@ namespace Task_Management_Platform
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -81,22 +81,10 @@ namespace Task_Management_Platform
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider =
+                manager.UserTokenProvider = 
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
-        }
-    }
-
-    //Configure the application roles manager
-    public class ApplicationRoleManager : RoleManager<IdentityRole>
-    {
-        public ApplicationRoleManager(IRoleStore<IdentityRole, string> store) : base(store) { }
-
-        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-        {
-            var roleStore = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
-            return new ApplicationRoleManager(roleStore);
         }
     }
 
@@ -116,6 +104,29 @@ namespace Task_Management_Platform
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+    }
+
+    // Configure the application role manager which is used in this application.
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    {
+
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> store) :
+        base(store)
+
+        {
+        }
+
+        public static ApplicationRoleManager
+        Create(IdentityFactoryOptions<ApplicationRoleManager> options,
+        IOwinContext context)
+
+        {
+
+            var roleStore = new
+            RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
+
+            return new ApplicationRoleManager(roleStore);
         }
     }
 }

@@ -17,13 +17,13 @@ namespace Task_Management_Platform.Models
         public string UserId { get; set; }
 
         //o echipa este creata de catre un organizator
-        public virtual ApplicationUser Organizator { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         //o echipa poate are mai multi membri
-        public virtual ICollection<ApplicationUser> Members { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
         
         //o echipa poate dezvolta mai multe taskuri
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Tasks> Tasks { get; set; }
         
         //o echipa poate dezvolta mai multe proiecte
         public virtual ICollection<Project> Projects { get; set; }

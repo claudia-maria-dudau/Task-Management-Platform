@@ -88,8 +88,8 @@ namespace Task_Management_Platform.Controllers
 
                 if (TryUpdateModel(user))
                 {
-                    user.Nume = editedUser.Nume;
-                    user.UserName = editedUser.UserName;
+                    //user.Nume = editedUser.Nume;
+                    //user.UserName = editedUser.UserName;
                     user.Email = editedUser.Email;
                     user.PhoneNumber = editedUser.PhoneNumber;
 

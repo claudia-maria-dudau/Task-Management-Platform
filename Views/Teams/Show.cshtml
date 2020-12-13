@@ -14,7 +14,7 @@
     <div class="panel-heading">@Model.Nume</div>
 
     <div class="panel-body">
-        Creat de: <p>@Model.Organizator.UserName</p>
+        Creat de: <p>@Model.User.UserName</p>
         <br />
         Data Inscriere: <p>@Model.DataInscriere</p>
         <br />
@@ -36,13 +36,14 @@
         {
             <br />
             <br />
-            <a class="btn btn-success pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
+            <a class="btn btn-info pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
         }
 
         @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
             <br />
-            <a class="btn btn-success pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
+            <br />
+            <a class="btn btn-info pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
             <br />
         }
 
@@ -63,7 +64,7 @@
                     <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
                     <br />
 
-                    Creat de: <p>@Model.Organizator.UserName</p>
+                    Creat de: <p>@proj.User.UserName</p>
                     <br />
 
                     <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
@@ -99,7 +100,7 @@
                     <p><a href="/Tasks/Show/@task.Title">@task.Title</a></p>
                     <br />
 
-                    Creat de: <p>@Model.Organizator.UserName</p>
+                    Creat de: <p>@task.User.UserName</p>
                 </div>
                 <div class="col-md-2"></div>
             </div>

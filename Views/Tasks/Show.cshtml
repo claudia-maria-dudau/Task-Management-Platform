@@ -8,13 +8,13 @@
 <a href="/Tasks/Index">Inapoi la taskuri</a>
 <br />
 
-@model Task_Management_Platform.Models.Task
+@model Task_Management_Platform.Models.Tasks
 
 <div class="panel panel-default">
     <div class="panel-heading">@Model.Title</div>
 
     <div class="panel-body">
-        Creat de: <p>@Model.Organizator.UserName</p>
+        Creat de: <p>@Model.User.UserName</p>
         <br />
         Descriere task: <p>@Model.Description</p>
         <br />

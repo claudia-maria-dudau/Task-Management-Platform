@@ -3,11 +3,9 @@
     ViewBag.Titlu = "New";
 }
 
-<h1>@ViewBag.Message</h1>
-
 <h2>Adaugare task</h2>
 
-@model Task_Management_Platform.Models.Task
+@model Task_Management_Platform.Models.Tasks
 
 <form method="post" action="/Tasks/New/@Model.TaskId">
     @Html.Label("Title", "Titlu Task")

@@ -21,6 +21,6 @@ namespace Task_Management_Platform.Models
         public virtual Team Team { get; set; }
 
         //un proiect este creat de catre un organizator
-        public virtual ApplicationUser Organizator { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

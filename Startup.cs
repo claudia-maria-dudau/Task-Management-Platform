@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
-using System;
 using Task_Management_Platform.Models;
 
 [assembly: OwinStartupAttribute(typeof(Task_Management_Platform.Startup))]
@@ -13,9 +12,7 @@ namespace Task_Management_Platform
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-
-            // Se apeleaza o metoda in care se adauga contul de administrator si rolurile aplicatiei
-             CreateAdminUserAndApplicationRoles();
+            CreateAdminUserAndApplicationRoles();
         }
 
         private void CreateAdminUserAndApplicationRoles()
@@ -37,7 +34,7 @@ namespace Task_Management_Platform
 
                 // se adauga utilizatorul administrator
                 var user = new ApplicationUser();
-                user.UserName = "Admin";
+                user.UserName = "admin@admin.com";
                 user.Email = "admin@admin.com";
                 var adminCreated = UserManager.Create(user, "1!Admin");
                 if (adminCreated.Succeeded)

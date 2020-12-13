@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace Task_Management_Platform.Controllers
 {
@@ -20,7 +21,7 @@ namespace Task_Management_Platform.Controllers
             if (TempData.ContainsKey("message"))
                 ViewBag.Message = TempData["message"];
 
-            var teams = db.Teams;
+            var teams = db.Teams.Include("User");
             ViewBag.Teams = teams;
             return View();
         }
@@ -33,7 +34,7 @@ namespace Task_Management_Platform.Controllers
 
             Team team = db.Teams.Find(id);
             bool apartine = false;
-            foreach (ApplicationUser member in team.Members)
+            foreach (ApplicationUser member in team.Users)
             {
                 if (member.Id == User.Identity.GetUserId())
                 {
