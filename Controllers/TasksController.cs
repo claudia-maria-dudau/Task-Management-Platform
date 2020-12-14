@@ -68,8 +68,9 @@ namespace Task_Management_Platform.Controllers
         //NEW
         //GET: afisare formular adaugare task
         [Authorize(Roles = "Organizator,Admin")]
-        public ActionResult New()
+        public ActionResult New(int Id)
         {
+            ViewBag.TeamId = Id;
             return View();
         }
 
@@ -77,11 +78,13 @@ namespace Task_Management_Platform.Controllers
         [Authorize(Roles = "Organizator,Admin")]
         [HttpPost]
         public ActionResult New(Task newTask)
-        {
+        { 
+            newTask.Status = "Not Started";
+                string userId = User.Identity.GetUserId();
+                newTask.UserId = userId;
             try
             {
-                newTask.Status = "Not Started";
-                newTask.UserId = User.Identity.GetUserId();
+               
                 //if (ModelState.IsValid)
                 //{
                     db.Tasks.Add(newTask);
@@ -89,12 +92,12 @@ namespace Task_Management_Platform.Controllers
                     TempData["message"] = "Taskul a fost adaugat cu success!";
 
                     ViewBag.esteAdmin = User.IsInRole("Admin");
-                    ViewBag.esteMembru = User.IsInRole("Membru");
+                    ViewBag.esteOrganizator = User.IsInRole("Organizator");
                     ViewBag.utilizatorCurent = User.Identity.GetUserId();
                     return Redirect("/Teams/Show/" + newTask.TeamId);
-                //}
+                /*}
 
-                ViewBag.Message = "Nu s-a putut adauga task-ul!";
+               ViewBag.Message = "Nu s-a putut adauga task-ul!";*/
                 return View(newTask);
             }
             catch (Exception e)

@@ -9,13 +9,19 @@ namespace Task_Management_Platform.Models
     public class Team
     {
         [Key]
-        public int TeamId {get;set;}
+        public int TeamId { get; set; }
+
+        [Required(ErrorMessage = "Numele echipei este obligatoriu")]
         public string Nume { get; set; }
         public DateTime DataInscriere { get; set; }
+ 
         public int ProjectId { get; set; }
-
+        public int TaskId
+        {
+            get; set;
+        }
         public string UserId { get; set; }
-
+        
         //o echipa este creata de catre un organizator
         public virtual ApplicationUser User { get; set; }
 

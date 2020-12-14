@@ -8,8 +8,7 @@
 <h2>Adaugare task</h2>
 
 @model Task_Management_Platform.Models.Task
-<form method="post" action="/Tasks/New">
-
+<form method="post" action="/Tasks/New/@ViewBag.TeamId">
     @Html.Label("Title", "Titlu Task")
     <br />
     @Html.TextBox("Title", null, new { @class = "form-control" })
@@ -22,6 +21,13 @@
     @Html.TextArea("Description", null, new { @class = "form-control" })
     <br />
     <br />
+
+    @Html.Label("Status", "Status")
+    <br />
+    @Html.TextBox("Status", null, new { @class = "form-control" })
+    <br />
+    <br />
+
 
     @Html.Label("DataStart", "Inceput task")
     <br />
@@ -36,9 +42,7 @@
     @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
     <br />
     <br />
-
-    @Html.HiddenFor(m => m.TeamId)
-
+    @Html.Hidden("TeamId")
     <button class="btn btn-sm btn-success" type="submit">Adauga task</button>
 
 </form>
