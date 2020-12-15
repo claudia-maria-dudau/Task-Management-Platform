@@ -12,25 +12,29 @@
     @Html.HttpMethodOverride(HttpVerbs.Put)
     @Html.Hidden("ProjectId")
     @Html.Hidden("TeamId")
-
+    @Html.Hidden("UserId")
     @Html.Label("Nume", "Nume Proiect")
     <br />
     @Html.Editor("Nume")
+    @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
     <br />
     <br />
     @Html.Label("Descriere")
     <br />
     @Html.Editor("Descriere")
+    @Html.ValidationMessageFor(model => model.Descriere, null, new { @class = "text-danger " })
     <br />
     <br />
     @Html.Label("DataInceput", "Data Inceput")
     <br />
     @Html.Editor("DataInceput")
+    @Html.ValidationMessageFor(model => model.DataInceput, null, new { @class = "text-danger " })
     <br />
     <br />
     @Html.Label("Deadline")
     <br />
     @Html.Editor("Deadline")
+    @Html.ValidationMessageFor(model => model.Deadline, null, new { @class = "text-danger " })
     <br />
     <br />
     <button class="btn btn-success" type="submit">Modifica proiect.</button>

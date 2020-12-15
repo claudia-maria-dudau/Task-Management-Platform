@@ -36,6 +36,11 @@ namespace Task_Management_Platform.Models
         //un task poate avea unul sau mai multe comentarii
         public virtual ICollection<Comment> Comments { get; set; }
 
+        internal static Task FromResult(int v)
+        {
+            throw new NotImplementedException();
+        }
+
         //un task este creat de catre un organizator
         public virtual ApplicationUser User { get; set; }
     }
