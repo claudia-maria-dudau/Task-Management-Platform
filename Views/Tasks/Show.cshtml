@@ -22,7 +22,11 @@
         <span class="label label-info">Perioada: @Model.DataStart - @Model.DataFin</span>
         <br />
         <hr>
-
+        @if (@Model.User2!=null)
+        {
+            <p>Asignat lui: @Model.User2.UserName</p>
+        <br />
+        }
         @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
             <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>

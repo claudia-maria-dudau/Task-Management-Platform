@@ -12,7 +12,11 @@ namespace Task_Management_Platform
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+              name: "Team",
+              url: "Teams/AdaugaUser/{id}/{id1}",
+              defaults: new { controller = "Teams", action = "AdaugaUser", id = UrlParameter.Optional,id1 = UrlParameter.Optional }
+          );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

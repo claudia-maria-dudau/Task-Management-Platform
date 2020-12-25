@@ -38,7 +38,9 @@ namespace Task_Management_Platform.Controllers
 
             return View(user);
         }
+     
 
+        
         //obtinere a tutror rolurilor din baza de date
         [NonAction]
         public IEnumerable<SelectListItem> GetAllRoles()

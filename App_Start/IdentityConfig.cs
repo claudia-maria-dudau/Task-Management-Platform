@@ -11,15 +11,21 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Task_Management_Platform.Models;
+using Task = Task_Management_Platform.Models.Task;
 
 namespace Task_Management_Platform
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public Models.Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            return Models.Task.FromResult(0);
+        }
+
+        System.Threading.Tasks.Task IIdentityMessageService.SendAsync(IdentityMessage message)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -29,6 +35,11 @@ namespace Task_Management_Platform
         {
             // Plug in your SMS service here to send a text message.
             return Task.FromResult(0);
+        }
+
+        System.Threading.Tasks.Task IIdentityMessageService.SendAsync(IdentityMessage message)
+        {
+            throw new NotImplementedException();
         }
     }
 
