@@ -1,4 +1,6 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css2?family=Langar&display=swap');
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }

@@ -16,10 +16,7 @@ namespace Task_Management_Platform.Models
         public DateTime DataInscriere { get; set; }
  
         public int ProjectId { get; set; }
-        public int TaskId
-        {
-            get; set;
-        }
+
         public string UserId { get; set; }
         
         //o echipa este creata de catre un organizator

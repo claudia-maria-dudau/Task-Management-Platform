@@ -18,7 +18,7 @@ namespace Task_Management_Platform.Models
 
         public string Description { get; set; }
         public string UserId { get; set; }
-
+        public string UserId2 { get; set; }
         public string Status { get; set; }
 
         [Required(ErrorMessage = "Data de inceput este obligatorie.")]
@@ -40,6 +40,9 @@ namespace Task_Management_Platform.Models
         {
             throw new NotImplementedException();
         }
+
+        //un task este asignat unui membru
+        public virtual ApplicationUser User2 { get; set; }
 
         //un task este creat de catre un organizator
         public virtual ApplicationUser User { get; set; }

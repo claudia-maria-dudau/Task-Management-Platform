@@ -7,30 +7,122 @@
     <li><h3>@ViewBag.Title</h3></li>
 </ol>
 
-@foreach (var user in ViewBag.Users)
+<!-- search -->
+<div class="container">
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="card card-sm" method="GET">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fas fa-search h4 text-body"></i>
+                    </div>
+
+                    <!--end of col-->
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" type="text" name="search"
+                               value="@ViewBag.SearchString"
+                               placeholder="Search users">
+
+                        <button class="btn btn-lg btn-success" type="submit">
+                            Search
+                        </button>
+                    </div>
+                    <!--end of col-->
+                </div>
+            </form>
+        </div>
+        <!--end of col-->
+    </div>
+</div>
+<br />
+
+@if (ViewBag.total == 0)
 {
-    <div class="panel-heading">Nume utilizator: @user.UserName</div>
+    <p>Nu exista useri</p>
+}
+else
+{
+    foreach (var user in ViewBag.Users)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">Nume utilizator: @user.UserName</div>
 
-    <div class="panel-body">
+            <div class="panel-body">
 
-        <i class="glyphicon glyphicon-envelope"></i> Email utilizator: <span class="label label-default">@user.Email</span>
+                <i class="glyphicon glyphicon-envelope"></i> Email utilizator: <span class="label label-default">@user.Email</span>
 
-        <br /><br />
+                <br /><br />
 
-        @if (@user.PhoneNumber != null)
-        {
-            <i class="glyphicon glyphicon-phone"></i>@:Telefon utilizator:<span class="label label-default">@user.PhoneNumber</span>
-        }
+                @if (@user.PhoneNumber != null)
+                {
+                    <i class="glyphicon glyphicon-phone"></i>@:Telefon utilizator:<span class="label label-default">@user.PhoneNumber</span>
+                }
 
+            </div>
+
+            <div class="panel-footer">
+
+                <a class="btn btn-sm btn-success" href="/Users/Edit/@user.Id"> Editare utilizator</a>
+                <a class="btn btn-sm btn-success" href="/Users/Show/@user.Id"> Vizualizare utilizator</a>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+    }
+
+    <!-- pagini -->
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    @if (ViewBag.search != "")
+                    {
+                        <a href="/Users/Index?page=1&search=@ViewBag.SearchString"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    }
+                    else
+                    {
+
+                        <a href="/Users/Index?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    }
+                </li>
+                @for (int i = 1; i <= ViewBag.lastPage; i++)
+                {
+                    if (ViewBag.search != "")
+                    {
+                        <li>
+                            <a href="/Users/Index?page=@i&search=@ViewBag.SearchString">@(i)</a>
+                        </li>
+                    }
+                    else
+                    {
+
+                        <li><a href="/Users/Index?page=@i">@(i)</a></li>
+                    }
+                }
+                <li>
+                    @if (ViewBag.search != "")
+                    {
+                        <a href="/Users/Index?page=@(ViewBag.lastPage)&search=@ViewBag.SearchString" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+                    else
+                    {
+
+                        <a href="/Users/Index?page=@(ViewBag.lastPage)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+                </li>
+            </ul>
+        </nav>
     </div>
-
-    <div class="panel-footer">
-
-        <a class="btn btn-sm btn-success" href="/Users/Edit/@user.Id"> Editare utilizator</a>
-        <a class="btn btn-sm btn-success" href="/Users/Show/@user.Id"> Vizualizare utilizator</a>
-
-    </div>
-
-    <br />
-    <br />
 }
