@@ -9,103 +9,108 @@
 <br />
 
 @model Task_Management_Platform.Models.Team
+<h1 class="panel-heading" style="text-align:center">@Model.Nume</h1>
 
-<div class="panel panel-default">
-    <div class="panel-heading">@Model.Nume</div>
+<div class="meniuEchipa">
+    @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
 
-    <div class="panel-body">
-        Creat de: <p>@Model.User.UserName</p>
-        <br />
-        Data Inscriere: <p>@Model.DataInscriere</p>
+        <a class="btn btn-sm btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
         <br />
         <br />
-        <hr>
+    }
 
-        @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+    @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
+
+
+
+        <a class="btn btn-sm btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
+        <br />
+        <br />
+    }
+    @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+    {
+        <a class="btn btn-danger pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
+
+        <form method="post" action="/Teams/Delete/@Model.TeamId">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+            <button class="btn btn-danger pull-right" type="submit">Sterge echipa</button>
+        </form>
+
+        <br />
+        <br />
+    }
+    <br />
+    <br />
+    <br />
+    <br />
+</div>
+    <!-- proiecte-->
+    <h2>
+        Proiecte
+        @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
-            <a class="btn btn-danger pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
-
-            <form method="post" action="/Teams/Delete/@Model.TeamId">
-                @Html.HttpMethodOverride(HttpVerbs.Delete)
-
-                <button class="btn btn-danger pull-right" type="submit">Sterge echipa</button>
-            </form>
-
-            <br />
-            <br />
+            <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Projects/New/@Model.TeamId"> Adauga proiect</a>
         }
+    </h2>
+    @foreach (var proj in Model.Projects)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
 
+                <div class="col-md-8">
+                    <div>
+                        <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
+                        <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- taskuri-->
+    <h2>
+        Taskuri
         @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
 
-            <a class="btn btn-sm btn btn-success pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
-
-            <a class="btn btn-sm btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
-            <br />
-            <br />
+            <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Tasks/New/@Model.TeamId">Adauga task</a>
         }
-
-
-        @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
-            <a class="btn btn-sm btn btn-success pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
-
-            <a class="btn btn-sm btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
-            <br />
-            <br />
-        }
-
-    </div>
-</div>
-<br />
-
-<!-- proiecte-->
-<h2>Proiecte</h2>
-@foreach (var proj in Model.Projects)
-{
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-
-            <div class="col-md-8">
-                <div>
-                    <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
-                    <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
-                </div>
-                <div style="display: inline-block; float : left; margin-right: 15px">
-                    <a class="glyphicon glyphicon-pencil" href="/Projects/Edit/@proj.ProjectId"></a>
-                </div>
-
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Projects/Delete/@proj.ProjectId">
-                        @Html.HttpMethodOverride(HttpVerbs.Delete)
-
-                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
-                    </form>
-                </div>
-
+    </h2>
+    @foreach (var task in Model.Tasks)
+    {
+        <div class="container">
+            <div class="row">
                 <div class="col-md-2"></div>
+
+                <div class="col-md-8">
+                    <div>
+                        <p><a href="/Tasks/Show/@task.TaskId">@task.Title</a></p>
+                        <p class="pull-left">@task.Status</p>
+                        <small class="pull-right">@task.DataStart - @task.DataFin</small>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-<!-- taskuri-->
-<h2>Taskuri</h2>
-@foreach (var task in Model.Tasks)
-{
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
+    <div class="panel panel-default">
 
-            <div class="col-md-8">
-                <div>
-                    <p><a href="/Tasks/Show/@task.TaskId">@task.Title</a></p>
-                    <p class="pull-left">@task.Status</p>
-                    <small class="pull-right">@task.DataStart - @task.DataFin</small>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
+        <div class="panel-body">
+            Creat de: <p>@Model.User.UserName</p>
+            <br />
+            Data Inscriere: <p>@Model.DataInscriere</p>
+            <br />
+            <br />
+            <hr>
+
+
         </div>
     </div>
-}
+    <br />
+

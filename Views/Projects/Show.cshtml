@@ -10,32 +10,27 @@
 <br />
 
 <div class="container">
-    <h2>@Model.Nume</h2>
-    <div class="row">
-        <div class="col-md-2"></div>
-
-        <div>
-            Creat de: <p>@Model.User.UserName</p>
-            <br />
-            <p>@Model.Descriere</p>
-            <br />
-            <br />
-            <small class="pull-right">@Model.DataInceput - @Model.Deadline</small>
-        </div>
+    <div class="jumbotron">
+        <p class="display-3">@Model.Nume</p>
+        <p class="lead">@Model.Descriere</p>
+        <hr class="my-4">
+        <p>Creat de:@Model.User.UserName</p>
+        <small class="pull-right">@Model.DataInceput - @Model.Deadline</small>
+        <p class="lead" style="margin-top:2rem">
             <div style="display: inline-block; float : left; margin-right: 15px">
-                <a class="glyphicon glyphicon-pencil" href="/Projects/Edit/@Model.ProjectId"></a>
+                <a class="btn btn-primary btn-lg" style="padding:1rem" href="/Projects/Edit/@Model.ProjectId">Editeaza proiect</a>
             </div>
 
             <div style="display: inline-block; float : left">
                 <form method="post" action="/Projects/Delete/@Model.ProjectId">
                     @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                    <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                    <button class="btn btn-primary btn-lg" style="padding:1rem"type="submit">Sterge proiect</button>
                 </form>
             </div>
 
-            <div class="col-md-2"></div>
-        </div>
+        </p>
     </div>
+
 </div>
 <hr />
