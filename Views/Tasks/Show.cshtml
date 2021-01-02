@@ -12,7 +12,7 @@
 <br />
 <div class="container">
     <div class="jumbotron">
-        <p class="display-3">@Model.Title</p>
+        <p class="display-3" >@Model.Title</p>
         Descriere task: <p class="lead">@Model.Description</p>
         Status:  <strong>@Model.Status</strong>
         <hr class="my-4">
@@ -26,12 +26,18 @@
     <p class="lead" style="margin-top:2rem">
         @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
-            <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
-            <form method="post" action="/Tasks/Delete/@Model.TaskId">
-                @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <div style="display: inline-block; float : left; margin-right: 15px">
+                <a class="btn btn-primary btn-lg" style="padding:1rem" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
+            </div>
 
-                <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
-            </form>
+            <div style="display: inline-block; float : left">
+                <form method="post" action="/Tasks/Delete/@Model.TaskId">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+                    <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
+                </form>
+            </div>
+        
         }
     </p>
     </div>
@@ -56,14 +62,14 @@
                 @if (comm.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
                 {
                     <div style="display: inline-block; float : left; margin-right: 15px">
-                        <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
+                        <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId">Editează</a>
                     </div>
 
                     <div style="display: inline-block; float : left">
                         <form method="post" action="/Comments/Delete/@comm.CommentId">
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                            <button  style="border: none; background: transparent" type="submit">Șterge</button>
                         </form>
                     </div>
                 }
