@@ -47,70 +47,76 @@
     <br />
     <br />
 </div>
-    <!-- proiecte-->
-    <h2>
-        Proiecte
-        @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
-            <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Projects/New/@Model.TeamId"> Adauga proiect</a>
-        }
-    </h2>
-    @foreach (var proj in Model.Projects)
+<!-- proiecte-->
+<h2>
+    Proiecte
+    @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
     {
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-
-                <div class="col-md-8">
-                    <div>
-                        <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
-                        <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-            </div>
-        </div>
+        <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Projects/New/@Model.TeamId"> Adauga proiect</a>
     }
+</h2>
+@foreach (var proj in Model.Projects)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
 
-    <!-- taskuri-->
-    <h2>
-        Taskuri
-        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
-
-            <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Tasks/New/@Model.TeamId">Adauga task</a>
-        }
-    </h2>
-    @foreach (var task in Model.Tasks)
-    {
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-
-                <div class="col-md-8">
-                    <div>
-                        <p><a href="/Tasks/Show/@task.TaskId">@task.Title</a></p>
-                        <p class="pull-left">@task.Status</p>
-                        <small class="pull-right">@task.DataStart - @task.DataFin</small>
-                    </div>
-                    <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div>
+                    <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
+                    <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
                 </div>
+                <div class="col-md-2"></div>
             </div>
-        </div>
-    }
-
-    <div class="panel panel-default">
-
-        <div class="panel-body">
-            Creat de: <p>@Model.User.UserName</p>
-            <br />
-            Data Inscriere: <p>@Model.DataInscriere</p>
-            <br />
-            <br />
-            <hr>
-
-
         </div>
     </div>
-    <br />
+}
+
+<!-- taskuri-->
+<br />
+<br />
+<hr>
+<h2>
+    Taskuri
+    @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
+
+        <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Tasks/New/@Model.TeamId">Adauga task</a>
+    }
+</h2>
+@foreach (var task in Model.Tasks)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div>
+                    <p><a href="/Tasks/Show/@task.TaskId">@task.Title</a></p>
+                    <p class="pull-left">@task.Status</p>
+                    <small class="pull-right">@task.DataStart - @task.DataFin</small>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+}
+<hr>
+
+<div class="panel-heading" style="box-sizing:border-box;border-top:10px black">
+
+    <div class="panel-body" style="background:aliceblue;line-height:10%">
+        <p style="padding-top:2rem;padding-left:1rem">Creat de:@Model.User.UserName
+        <p style="float:right;margin-top:-1rem;padding-right:1rem">
+            Data Inscriere: @Model.DataInscriere
+        </p>
+        </p>
+        <br />
+        <br />
+        <hr>
+
+
+    </div>
+</div>
+<br />
 
