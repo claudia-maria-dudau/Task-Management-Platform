@@ -9,38 +9,35 @@
 <a href="/Teams/Show/@Model.TeamId">Inapoi la taskuri</a>
 <br />
 
-<div class="panel panel-default">
-    <div class="panel-heading">@Model.Title</div>
-
-    <div class="panel-body">
-        Creat de: <p>@Model.User.UserName</p>
-        <br />
-        Descriere task: <p>@Model.Description</p>
-        <br />
-        Status: <strong>@Model.Status</strong>
-        <br />
+<br />
+<div class="container">
+    <div class="jumbotron">
+        <p class="display-3">@Model.Title</p>
+        Descriere task: <p class="lead">@Model.Description</p>
+        Status:  <strong>@Model.Status</strong>
+        <hr class="my-4">
+        <p>Creat de:@Model.User.UserName</p>
         <span class="label label-info">Perioada: @Model.DataStart - @Model.DataFin</span>
-        <br />
-        <hr>
-
         @if (@Model.User2 != null)
         {
             <p>Asignat lui: @Model.User2.UserName</p>
             <br />
         }
-
+    <p class="lead" style="margin-top:2rem">
         @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
             <a class="btn btn-success pull-left" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
             <form method="post" action="/Tasks/Delete/@Model.TaskId">
                 @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                <button class="btn btn-danger pull-right" type="submit">Sterge task</button>
+                <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
             </form>
         }
+    </p>
     </div>
+
 </div>
-<br />
+<hr />
 
 <!-- comentarii -->
 @foreach (var comm in Model.Comments)
