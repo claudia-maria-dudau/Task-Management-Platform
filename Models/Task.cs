@@ -40,6 +40,8 @@ namespace Task_Management_Platform.Models
         {
             throw new NotImplementedException();
         }
+        //Este asignat unui membru
+        public virtual ApplicationUser User2 { get; set; }
 
         //un task este asignat unui membru
         public virtual ApplicationUser User2 { get; set; }

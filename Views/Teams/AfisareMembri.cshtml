@@ -1,0 +1,16 @@
+﻿@model Task_Management_Platform.Models.ApplicationUser
+
+
+@{
+    ViewBag.Title = "Afisare Membri";
+}
+@foreach (var user in ViewBag.Users)
+{
+    <div class="panel-heading">Nume utilizator: @user.UserName</div>
+    <div style="display: inline-block; float : left">
+        <a class="btn btn-sm btn btn-success" href="/Teams/AdaugaUser/@user.Id/@ViewBag.TeamId">Adauga la echipa.</a>
+    </div>
+    <br />
+    <br />
+}
+

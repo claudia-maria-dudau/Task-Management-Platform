@@ -39,6 +39,7 @@ namespace Task_Management_Platform.Models
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Task_Management_Platform.Migrations.Configuration>("DefaultConnection"));
         }
 
+
         public DbSet<Team> Teams { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Task> Tasks { get; set; }
