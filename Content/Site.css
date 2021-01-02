@@ -24,3 +24,27 @@ select,
 textarea {
     max-width: 280px;
 }
+.form-control2 {
+    width: 100%;
+    height: calc(1.5em + 1.5rem);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #f7f7f9;
+    background-clip: padding-box;
+    border: 0 solid #ced4da;
+    border-radius: 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    max-width: 83%;
+}
+
+.grid-container {
+    grid-template-columns: auto auto;
+    grid-row-gap: 5rem;
+    display: grid;
+}
+
+    .grid-container .grid-item {
+    }
