@@ -9,24 +9,50 @@ using Task_Management_Platform.Models;
 
 namespace Task_Management_Platform.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+        private int perPage = 10;
 
         // GET: Users
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             if (TempData.ContainsKey("message"))
                 ViewBag.Message = TempData["message"];
 
             var users = db.Users.OrderBy(u => u.UserName);
+            var search = "";
 
-            ViewBag.Users = users;
+            //cautare
+            if (Request.Params.Get("search") != null)
+            {
+                search = Request.Params.Get("search").Trim();
+                List<string> userIds = db.Users.Where(u => u.UserName.Contains(search)).Select(u => u.Id).ToList();
+                users = db.Users.Where(u => userIds.Contains(u.Id)).OrderBy(u => u.UserName);
+            }
+
+            //paginare
+            var totalUsers = users.Count();
+            var currentPage = Convert.ToInt32(Request.Params.Get("page"));
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset = (currentPage - 1) * perPage;
+            }
+
+            var paginatedUsers = users.Skip(offset).Take(perPage);
+
+            ViewBag.perPage = perPage;
+            ViewBag.total = totalUsers;
+            ViewBag.lastPage = Math.Ceiling((float)totalUsers / (float)perPage);
+            ViewBag.users = paginatedUsers;
             return View();
         }
 
         //GET: user
+        [Authorize(Roles = "Admin")]
         public ActionResult Show(string id)
         {
             ApplicationUser user = db.Users.Find(id);
@@ -60,6 +86,7 @@ namespace Task_Management_Platform.Controllers
         }
 
         //GET: formular editare
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             ApplicationUser user = db.Users.Find(id);
@@ -75,6 +102,7 @@ namespace Task_Management_Platform.Controllers
 
         //PUT: editare user
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id, ApplicationUser editedUser)
         {
             ApplicationUser user = db.Users.Find(id);
@@ -122,6 +150,7 @@ namespace Task_Management_Platform.Controllers
 
         //DELETE: stergere user
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             try
@@ -170,6 +199,18 @@ namespace Task_Management_Platform.Controllers
                 TempData["message"] = "Nu s-a putut sterge utilizatorul!";
                 return RedirectToAction("Index");
             }
+        }
+
+        [Authorize(Roles = "Admin,Organizator,Membru")]
+        public ActionResult AfisareMembri(int id)
+        {
+            Team team = db.Teams.Find(id);
+            var users = team.Users.OrderBy(u => u.UserName);
+            var tasks = db.Teams.Find(id).Tasks;
+
+            ViewBag.users = users;
+            ViewBag.tasks = tasks;
+            return View();
         }
     }
 }

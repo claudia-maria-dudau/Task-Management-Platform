@@ -43,6 +43,9 @@ namespace Task_Management_Platform.Models
         //Este asignat unui membru
         public virtual ApplicationUser User2 { get; set; }
 
+        //un task este asignat unui membru
+        public virtual ApplicationUser User2 { get; set; }
+
         //un task este creat de catre un organizator
         public virtual ApplicationUser User { get; set; }
     }

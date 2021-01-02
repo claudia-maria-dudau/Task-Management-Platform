@@ -5,7 +5,7 @@
 
 <h1>@ViewBag.Message</h1>
 
-<a href="/Teams/Index">Inapoi la echipe</a>
+<a href="/Teams/Index" class="glyphicon glyphicon-chevron-left">Inapoi la echipe</a>
 <br />
 
 @model Task_Management_Platform.Models.Team
@@ -23,7 +23,7 @@
 
         @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
         {
-            <a class="btn btn-success pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
+            <a class="btn btn-danger pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
 
             <form method="post" action="/Teams/Delete/@Model.TeamId">
                 @Html.HttpMethodOverride(HttpVerbs.Delete)
@@ -35,18 +35,23 @@
             <br />
         }
 
-        @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
+        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
         {
-            <a class="btn btn-info pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
 
+            <a class="btn btn-sm btn btn-success pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
+
+            <a class="btn btn-sm btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
             <br />
             <br />
         }
 
-        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
 
-            <a class="btn btn-info pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
+        @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
+        {
+            <a class="btn btn-sm btn btn-success pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
+
+            <a class="btn btn-sm btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
+            <br />
             <br />
         }
 
@@ -65,11 +70,6 @@
             <div class="col-md-8">
                 <div>
                     <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
-                    <br />
-
-                    Creat de: <p>@proj.User.UserName</p>
-                    <br />
-
                     <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
                 </div>
                 <div style="display: inline-block; float : left; margin-right: 15px">
@@ -80,7 +80,7 @@
                     <form method="post" action="/Projects/Delete/@proj.ProjectId">
                         @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit">Sterge proiect.</button>
+                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
                     </form>
                 </div>
 
@@ -101,49 +101,11 @@
             <div class="col-md-8">
                 <div>
                     <p><a href="/Tasks/Show/@task.TaskId">@task.Title</a></p>
-                    <br />
-
-                    Creat de: <p>@task.User.UserName</p>
+                    <p class="pull-left">@task.Status</p>
+                    <small class="pull-right">@task.DataStart - @task.DataFin</small>
                 </div>
                 <div class="col-md-2"></div>
             </div>
         </div>
     </div>
-}
-@if (User.IsInRole("Organizator") || User.IsInRole("Admin"))
-{
-    if (User.IsInRole("Admin"))
-    {
-        ViewBag.TeamId = Model.TeamId;
-        <a class="btn btn-sm btn btn-success" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri.</a>
-
-    }
-}
-@if (User.IsInRole("Organizator") || User.IsInRole("Admin"))
-{
-    foreach (var membr in Model.Users)
-    {
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-
-                <div class="col-md-8">
-                    <div>
-                        <p>@membr.UserName</p>
-                        <br />
-                    </div>
-                    <div style="display: inline-block; float : left">
-                        <form method="post" action="/Teams/AdaugaTask/@membr.Id">
-                            @Html.HttpMethodOverride(HttpVerbs.Put)
-                            @Html.DropDownListFor(m => m.TaskId, new SelectList(Model.Tasks, "TaskId", "Title", "task"), null, new { @class = "form-control" })
-                            <br />
-                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit">Asigneaza task.</button>
-                        </form>
-                    </div>
-
-                    <div class="col-md-2"></div>
-                </div>
-            </div>
-        </div>
-    }
 }

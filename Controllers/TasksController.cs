@@ -10,7 +10,13 @@ namespace Task_Management_Platform.Controllers
     public class TasksController : Controller
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
-
+        [NonAction]
+        private void SetAccessRights()
+        {
+            ViewBag.esteAdmin = User.IsInRole("Admin");
+            ViewBag.esteOrganizator = User.IsInRole("Organizator");
+            ViewBag.utilizatorCurent = User.Identity.GetUserId();
+        }
 
         //SHOW
         //GET: afisarea unui singur task
@@ -27,9 +33,7 @@ namespace Task_Management_Platform.Controllers
                 ViewBag.seteazaStatus = true;
             }
 
-            ViewBag.esteAdmin = User.IsInRole("Admin");
-            ViewBag.esteOrganizator = User.IsInRole("Organizator");
-            ViewBag.utilizatorCurent = User.Identity.GetUserId();
+            SetAccessRights();
 
             return View(task);
         }
@@ -54,11 +58,13 @@ namespace Task_Management_Platform.Controllers
                     return Redirect("/Tasks/Show/" + newComment.TaskId);
                 }
 
+                SetAccessRights();
                 Task task = db.Tasks.Find(newComment.TaskId);
                 return View(task);
             }
             catch (Exception e)
             {
+                SetAccessRights();
                 Task task = db.Tasks.Find(newComment.TaskId);
                 return View(task);
             }
@@ -80,29 +86,25 @@ namespace Task_Management_Platform.Controllers
         public ActionResult New(Task newTask)
         { 
             newTask.Status = "Not Started";
-                string userId = User.Identity.GetUserId();
-                newTask.UserId = userId;
+            string userId = User.Identity.GetUserId();
+            newTask.UserId = userId;
             try
             {
-               
-                //if (ModelState.IsValid)
-                //{
+                if (ModelState.IsValid)
+                {
                     db.Tasks.Add(newTask);
                     db.SaveChanges();
                     TempData["message"] = "Taskul a fost adaugat cu success!";
 
-                    ViewBag.esteAdmin = User.IsInRole("Admin");
-                    ViewBag.esteOrganizator = User.IsInRole("Organizator");
-                    ViewBag.utilizatorCurent = User.Identity.GetUserId();
                     return Redirect("/Teams/Show/" + newTask.TeamId);
-                /*}
 
-               ViewBag.Message = "Nu s-a putut adauga task-ul!";*/
+                }
+               ViewBag.Message = "Nu s-a putut adauga task-ul!";
                 return View(newTask);
             }
             catch (Exception e)
             {
-                ViewBag.Message = e.Message;//"Nu s-a putut adauga task-ul!";
+                ViewBag.Message = "Nu s-a putut adauga task-ul!";
                 return View(newTask);
             }
         }

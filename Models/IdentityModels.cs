@@ -14,6 +14,14 @@ namespace Task_Management_Platform.Models
         //lista cu toate rolurile din baza de date
         public IEnumerable<SelectListItem> AllRoles { get; set; }
 
+
+        //un user apartine in mai multe echipe
+        public virtual ICollection<Team> Teams { get; set; }
+
+        //un user poate avea mia multe taskuri (in echipe diferite)
+        public virtual ICollection<Task> Tasks { get; set; }
+
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
