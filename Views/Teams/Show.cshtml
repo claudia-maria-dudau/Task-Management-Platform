@@ -9,58 +9,52 @@
 <br />
 
 @model Task_Management_Platform.Models.Team
+<h1 class="panel-heading" style="text-align:center">@Model.Nume</h1>
 
-<div class="panel panel-default">
-    <div class="panel-heading">@Model.Nume</div>
+<div class="meniuEchipa">
+    @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
 
-    <div class="panel-body">
-        Creat de: <p>@Model.User.UserName</p>
+        <a class="btn btn-sm btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
         <br />
-        Data Inscriere: <p>@Model.DataInscriere</p>
+        <br />
+    }
+
+    @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
+
+
+
+        <a class="btn btn-sm btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
         <br />
         <br />
-        <hr>
+    }
+    @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+    {
+        <a class="btn btn-danger pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
 
-        @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
-        {
-            <a class="btn btn-danger pull-left" href="/Teams/Edit/@Model.TeamId">Modifica echipa</a>
+        <form method="post" action="/Teams/Delete/@Model.TeamId">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-            <form method="post" action="/Teams/Delete/@Model.TeamId">
-                @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-danger pull-right" type="submit">Sterge echipa</button>
+        </form>
 
-                <button class="btn btn-danger pull-right" type="submit">Sterge echipa</button>
-            </form>
-
-            <br />
-            <br />
-        }
-
-        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
-
-            <a class="btn btn-sm btn btn-success pull-left" href="/Tasks/New/@Model.TeamId">Adauga task</a>
-
-            <a class="btn btn-sm btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
-            <br />
-            <br />
-        }
-
-
-        @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
-            <a class="btn btn-sm btn btn-success pull-left" href="/Projects/New/@Model.TeamId">Adauga proiect</a>
-
-            <a class="btn btn-sm btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
-            <br />
-            <br />
-        }
-
-    </div>
+        <br />
+        <br />
+    }
+    <br />
+    <br />
+    <br />
+    <br />
 </div>
-<br />
-
 <!-- proiecte-->
-<h2>Proiecte</h2>
+<h2>
+    Proiecte
+    @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
+        <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Projects/New/@Model.TeamId"> Adauga proiect</a>
+    }
+</h2>
 @foreach (var proj in Model.Projects)
 {
     <div class="container">
@@ -72,18 +66,6 @@
                     <p><a href="/Projects/Show/@proj.ProjectId">@proj.Nume</a></p>
                     <small class="pull-right">@proj.DataInceput - @proj.Deadline</small>
                 </div>
-                <div style="display: inline-block; float : left; margin-right: 15px">
-                    <a class="glyphicon glyphicon-pencil" href="/Projects/Edit/@proj.ProjectId"></a>
-                </div>
-
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Projects/Delete/@proj.ProjectId">
-                        @Html.HttpMethodOverride(HttpVerbs.Delete)
-
-                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
-                    </form>
-                </div>
-
                 <div class="col-md-2"></div>
             </div>
         </div>
@@ -91,7 +73,17 @@
 }
 
 <!-- taskuri-->
-<h2>Taskuri</h2>
+<br />
+<br />
+<hr>
+<h2>
+    Taskuri
+    @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+    {
+
+        <a class="btn btn-sm btn btn-success pull-left" style="float:right" href="/Tasks/New/@Model.TeamId">Adauga task</a>
+    }
+</h2>
 @foreach (var task in Model.Tasks)
 {
     <div class="container">
@@ -109,3 +101,22 @@
         </div>
     </div>
 }
+<hr>
+
+<div class="panel-heading" style="box-sizing:border-box;border-top:10px black">
+
+    <div class="panel-body" style="background:aliceblue;line-height:10%">
+        <p style="padding-top:2rem;padding-left:1rem">Creat de:@Model.User.UserName
+        <p style="float:right;margin-top:-1rem;padding-right:1rem">
+            Data Inscriere: @Model.DataInscriere
+        </p>
+        </p>
+        <br />
+        <br />
+        <hr>
+
+
+    </div>
+</div>
+<br />
+
