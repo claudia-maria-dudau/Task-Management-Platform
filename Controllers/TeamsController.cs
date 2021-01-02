@@ -13,7 +13,7 @@ namespace Task_Management_Platform.Controllers
     public class TeamsController : Controller
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
-        private int perPage = 5;
+        private int perPage = 10;
 
         [Authorize(Roles = "User,Membru,Organizator,Admin")]
         // GET: Teams

@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap.bundles.min")
+
 
 </head>
 <body>
@@ -19,7 +21,7 @@
                 </button>
                 @Html.ActionLink("Task Management Platform", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse ">
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("User") || User.IsInRole("Membru") || User.IsInRole("Organizator") || User.IsInRole("Admin"))
                     {
