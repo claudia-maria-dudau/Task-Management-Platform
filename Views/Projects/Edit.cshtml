@@ -2,12 +2,14 @@
 @{
     ViewBag.Title = "Edit";
 }
-<h1>@ViewBag.Message</h1>
+
+<br />
+<p class="text-success">@ViewBag.Message</p>
+
 <h2>Editeaza proiect</h2>
 
 @model Task_Management_Platform.Models.Project
-<div class="container body-content">
-
+<div class="container body-content" style="margin-top:20px;">
     <form method="post" action="/Projects/Edit/@Model.ProjectId">
         @Html.HttpMethodOverride(HttpVerbs.Put)
         @Html.Hidden("ProjectId")

@@ -4,13 +4,20 @@
 @{
     ViewBag.Title = "Afisare Membri";
 }
-@foreach (var user in ViewBag.Users)
-{
-    <div class="panel-heading">Nume utilizator: @user.UserName</div>
-    <div style="display: inline-block; float : left">
-        <a class="btn btn-sm btn btn-success" href="/Teams/AdaugaUser/@user.Id/@ViewBag.TeamId">Adauga la echipa.</a>
-    </div>
-    <br />
-    <br />
-}
 
+<br />
+<p class="text-success">@ViewBag.Message</p>
+
+<h1>Utilizatori disponibili</h1>
+
+<table class="table table-hover">
+    <tbody>
+        @foreach (var user in ViewBag.Users)
+        {
+            <tr class="table-secondary">
+                <th scope="row">@user.UserName</th>
+                <td><a class="btn btn-sm btn btn-success" href="/Teams/AdaugaUser/@user.Id/@ViewBag.TeamId">Adauga la echipa.</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

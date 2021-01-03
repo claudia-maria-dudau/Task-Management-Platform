@@ -2,39 +2,42 @@
     ViewBag.Titlu = "New";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
 <h2>Adaugare proiect</h2>
 
 @model Task_Management_Platform.Models.Project
 
-<form method="post" action="/Projects/New/@ViewBag.TeamId">
+<div class="container body-content" style="margin-top:20px;">
+    <form method="post" action="/Projects/New/@ViewBag.TeamId">
 
-    @Html.Hidden("UserId")
-    @Html.Hidden("TeamId")
-    @Html.Label("Nume", "Nume Proiect")
-    <br />
-    @Html.TextBox("Nume", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
-    <br />
-    <br />
-    @Html.Label("Descriere")
-    <br />
-    @Html.TextArea("Descriere", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Descriere, null, new { @class = "text-danger " })
-    <br />
-    <br />
-    @Html.Label("DataInceput", "Data Inceput")
-    <br />
-    @Html.TextBox("DataInceput", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.DataInceput, null, new { @class = "text-danger " })
-    <br />
-    <br />
-    @Html.Label("Deadline")
-    <br />
-    @Html.TextBox("Deadline", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Deadline, null, new { @class = "text-danger " })
-    <br />
-    <br />
-    <button class="btn btn-sm btn-success" type="submit">Adauga proiect</button>
-</form>
+        @Html.Hidden("UserId")
+        @Html.Hidden("TeamId")
+        @Html.Label("Nume", "Nume Proiect")
+        <br />
+        @Html.TextBox("Nume", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
+        <br />
+        <br />
+        @Html.Label("Descriere")
+        <br />
+        @Html.TextArea("Descriere", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Descriere, null, new { @class = "text-danger " })
+        <br />
+        <br />
+        @Html.Label("DataInceput", "Data Inceput")
+        <br />
+        @Html.TextBox("DataInceput", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DataInceput, null, new { @class = "text-danger " })
+        <br />
+        <br />
+        @Html.Label("Deadline")
+        <br />
+        @Html.TextBox("Deadline", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Deadline, null, new { @class = "text-danger " })
+        <br />
+        <br />
+        <button class="btn btn-sm btn-success" type="submit">Adauga proiect</button>
+    </form>
+</div>

@@ -10,22 +10,32 @@
 
 @model Task_Management_Platform.Models.Team
 
-<form method="post" action="/Teams/Edit/@Model.TeamId">
-    @Html.HttpMethodOverride(HttpVerbs.Put)
+<div class="container body-content" style="margin-top:20px;">
+    <form method="post" action="/Teams/Edit/@Model.TeamId">
+        @Html.HttpMethodOverride(HttpVerbs.Put)
 
-    @Html.Hidden("UserId")
+        @Html.Hidden("UserId")
 
 
-    @Html.Hidden("TeamId")
+        @Html.Hidden("TeamId")
 
-    @Html.Label("Nume", "Nume Echipa")
-    <br />
-    @Html.Editor("Nume")
-    @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
-    <br />
-    <br />
-    @Html.Label("DataInscriere", "Data Inscrierii")
-    <br />
-    @Html.Editor("DataInscriere")
-    <button class="btn btn-success" type="submit">Modifica echipa.</button>
-</form>
+        @Html.Label("Nume", "Nume Echipa")
+        <br />
+        <div class="form-control2">
+            @Html.Editor("Nume")
+            @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
+        </div>
+        <br />
+        <br />
+
+        @Html.Label("DataInscriere", "Data Inscrierii")
+        <br />
+        <div class="form-control2">
+            @Html.Editor("DataInscriere")
+        </div>
+        <br />
+        <br />
+
+        <button class="btn btn-success" type="submit">Modifica echipa</button>
+    </form>
+</div>

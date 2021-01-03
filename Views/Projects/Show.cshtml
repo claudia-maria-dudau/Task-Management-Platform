@@ -3,18 +3,20 @@
     ViewBag.Title = "Show";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
+
 @model Task_Management_Platform.Models.Project
 
 <a href="/Teams/Show/@Model.TeamId">Inapoi la echipa</a>
 <br />
 
-<div class="container">
+<div class="container" style="margin-top:20px;">
     <div class="jumbotron">
         <p class="display-3">@Model.Nume</p>
         <p class="lead">@Model.Descriere</p>
         <hr class="my-4">
-        <p>Creat de:@Model.User.UserName</p>
+        <p>Creat de: @Model.User.UserName</p>
         <small class="pull-right">@Model.DataInceput - @Model.Deadline</small>
         <p class="lead" style="margin-top:2rem">
             <div style="display: inline-block; float : left; margin-right: 15px">
@@ -25,7 +27,7 @@
                 <form method="post" action="/Projects/Delete/@Model.ProjectId">
                     @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                    <button class="btn btn-primary btn-lg" style="padding:1rem"type="submit">Sterge proiect</button>
+                    <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge proiect</button>
                 </form>
             </div>
 

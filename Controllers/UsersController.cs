@@ -12,7 +12,7 @@ namespace Task_Management_Platform.Controllers
     public class UsersController : Controller
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
-        private int perPage = 10;
+        private int perPage = 20;
 
         // GET: Users
         [Authorize(Roles = "Admin")]
@@ -135,6 +135,9 @@ namespace Task_Management_Platform.Controllers
                     UserManager.AddToRole(id, selectedRole.Name);
 
                     db.SaveChanges();
+
+                    TempData["message"] = "Utilizatorul a fost editat!";
+                    return RedirectToAction("Index");
                 }
 
                 TempData["message"] = "Nu s-a putut modifica utilizatorul!";
