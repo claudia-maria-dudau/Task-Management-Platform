@@ -3,9 +3,11 @@
     ViewBag.Titlu = "New";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
 <h2>Adaugare echipa</h2>
+<br />
 
 @model Task_Management_Platform.Models.Team
 
@@ -17,5 +19,5 @@
     @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
     <br />
     <br />
-    <button class="btn btn-sm btn-success" type="submit">Adauga echipa.</button>
+    <button class="btn btn-sm btn-success" type="submit">Adauga echipa</button>
 </form>

@@ -3,9 +3,10 @@
     ViewBag.Title = "Index";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
-<h2 style="text-align: center">Echipe</h2>
+<h1>Echipe</h1>
 
 <!-- search -->
 <div class="container">
@@ -37,7 +38,7 @@
 </div>
 <br />
 
-<a class="btn btn-primary" href="/Teams/New">Adauga echipa.</a>
+<a class="btn btn-primary" href="/Teams/New">Adauga echipa</a>
 <br />
 <br />
 
@@ -55,9 +56,9 @@ else
                 <div class="card-header"><h4>@team.Nume</h4></div>
                 <div class="card-body">
                     <p class="card-title">Creat de: @team.User.UserName</p>
-                    <p class="card-text"> <span class="label label-info">Data inscriere:@team.DataInscriere</span></p>
+                    <p class="card-text"> <span class="label label-info">Data inscriere: @team.DataInscriere</span></p>
                     <div class="modal-footer">
-                        <a class="btn btn-primary" href="/Teams/Show/@team.TeamId">Afisare echipa.</a>
+                        <a class="btn btn-primary" href="/Teams/Show/@team.TeamId">Afisare echipa</a>
                     </div>
                 </div>
             </div>

@@ -3,19 +3,20 @@
     ViewBag.Title = "Show";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
 <a href="/Teams/Index" class="glyphicon glyphicon-chevron-left">Inapoi la echipe</a>
 <br />
 
 @model Task_Management_Platform.Models.Team
-<h1 class="panel-heading" style="text-align:center">@Model.Nume</h1>
+<h1 style="text-align:center">@Model.Nume</h1>
 
 <div class="meniuEchipa">
     @if (ViewBag.esteMembru || ViewBag.esteOrganizator || ViewBag.esteAdmin)
     {
 
-        <a class="btn btn-sm btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
+        <a class="btn btn btn-success pull-right" href="/Users/AfisareMembri/@Model.TeamId">Afisare membrii</a>
         <br />
         <br />
     }
@@ -25,7 +26,7 @@
 
 
 
-        <a class="btn btn-sm btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
+        <a class="btn btn btn-success pull-right" href="/Teams/AfisareMembri/@Model.TeamId">Adauga noi membri</a>
         <br />
         <br />
     }

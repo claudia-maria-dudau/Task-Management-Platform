@@ -3,9 +3,10 @@
     ViewBag.Title = "Edit";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
-<h2>Modificare echipa.</h2>
+<h2>Modificare echipa</h2>
 
 @model Task_Management_Platform.Models.Team
 
@@ -19,12 +20,12 @@
 
     @Html.Label("Nume", "Nume Echipa")
     <br />
-    @Html.Editor("Nume");
+    @Html.Editor("Nume")
     @Html.ValidationMessageFor(model => model.Nume, null, new { @class = "text-danger " })
     <br />
     <br />
     @Html.Label("DataInscriere", "Data Inscrierii")
     <br />
-    @Html.Editor("DataInscriere");
+    @Html.Editor("DataInscriere")
     <button class="btn btn-success" type="submit">Modifica echipa.</button>
 </form>
