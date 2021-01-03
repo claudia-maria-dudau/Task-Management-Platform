@@ -3,40 +3,38 @@
     ViewBag.Title = "Afisaremembri";
 }
 
-<h2>Afisare Membri</h2>
+
+<ol class="breadcrumb">
+    <li><h3>Afișare Membri</h3></li>
+</ol>
 
 @foreach (var membr in ViewBag.users)
-{
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
+{<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
 
-            <div class="col-md-8">
-                <div>
-                    <p>@membr.UserName</p>
+        <p style="font-size:19px">
+            @membr.UserName
+            <div style="display: inline-block;margin-left:40rem;float : right">
+                <form method="post" action="/Teams/AdaugaTask/@membr.Id">
+                    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+                    <select name="TaskId">
+                        @foreach (var task in ViewBag.tasks)
+                        {
+                            <option value="@task.TaskId">
+                                @task.Title
+                            </option>
+                        }
+                    </select>
+
                     <br />
-                </div>
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Teams/AdaugaTask/@membr.Id">
-                        @Html.HttpMethodOverride(HttpVerbs.Put)
-
-                        <select name="TaskId">
-                            @foreach (var task in ViewBag.tasks)
-                            {
-                                <option 
-                                        value="@task.TaskId">
-                                    @task.Title
-                                    </option>
-                                }
-                        </select>
-
-                        <br />
-                        <button style="border: none; background: transparent" type="submit">Asigneaza task.</button>
-                    </form>
-                </div>
-
-                <div class="col-md-2"></div>
+                    <button style="border: none; background: transparent" type="submit">Asigneaza task.</button>
+                </form>
             </div>
-        </div>
+        </p>
     </div>
+</div>
+
 }
