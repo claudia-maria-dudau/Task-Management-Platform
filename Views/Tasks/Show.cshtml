@@ -3,7 +3,8 @@
     ViewBag.Title = "Show";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
 @model Task_Management_Platform.Models.Task
 <a href="/Teams/Show/@Model.TeamId">Inapoi la taskuri</a>
@@ -12,34 +13,34 @@
 <br />
 <div class="container">
     <div class="jumbotron">
-        <p class="display-3" >@Model.Title</p>
+        <p class="display-3">@Model.Title</p>
         Descriere task: <p class="lead">@Model.Description</p>
-        Status:  <strong>@Model.Status</strong>
+        Status: <strong>@Model.Status</strong>
         <hr class="my-4">
-        <p>Creat de:@Model.User.UserName</p>
+        <p>Creat de: @Model.User.UserName</p>
         <span class="label label-info">Perioada: @Model.DataStart - @Model.DataFin</span>
         @if (@Model.User2 != null)
         {
             <p>Asignat lui: @Model.User2.UserName</p>
             <br />
         }
-    <p class="lead" style="margin-top:2rem">
-        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
-        {
-            <div style="display: inline-block; float : left; margin-right: 15px">
-                <a class="btn btn-primary btn-lg" style="padding:1rem" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
-            </div>
+        <p class="lead" style="margin-top:2rem">
+            @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+            {
+                <div style="display: inline-block; float : left; margin-right: 15px">
+                    <a class="btn btn-primary btn-lg" style="padding:1rem" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
+                </div>
 
-            <div style="display: inline-block; float : left">
-                <form method="post" action="/Tasks/Delete/@Model.TaskId">
-                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <div style="display: inline-block; float : left">
+                    <form method="post" action="/Tasks/Delete/@Model.TaskId">
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                    <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
-                </form>
-            </div>
-        
-        }
-    </p>
+                        <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
+                    </form>
+                </div>
+
+            }
+        </p>
     </div>
 
 </div>
@@ -69,7 +70,7 @@
                         <form method="post" action="/Comments/Delete/@comm.CommentId">
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                            <button  style="border: none; background: transparent" type="submit">Șterge</button>
+                            <button style="border: none; background: transparent" type="submit">Șterge</button>
                         </form>
                     </div>
                 }

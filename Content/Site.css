@@ -24,6 +24,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* search */
 .form-control2 {
     width: 100%;
     height: calc(1.5em + 1.5rem);
@@ -40,6 +42,7 @@ textarea {
     max-width: 83%;
 }
 
+/* afisare echipe */
 .grid-container {
     grid-template-columns: auto auto;
     grid-row-gap: 5rem;
@@ -66,4 +69,21 @@ textarea {
 }
 .meniuEchipa + h2{
     padding-top:4rem;
+}
+
+/* titluri */
+h1 {
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* tabel utilizatori */
+table{
+    margin-top: 20px;
+}
+
+/* paginare */
+.pagination{
+    margin-left: 50%;
+    margin-top: 30px;
 }

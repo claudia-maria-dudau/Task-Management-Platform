@@ -4,34 +4,40 @@
     ViewBag.Title = "Editare rol utilizator";
 }
 
-<ol class="breadcrumb">
-    <li><h3>@ViewBag.Title</h3></li>
-</ol>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Users", routeValues: new { id = @Model.Id }))
-{
-    @Html.HttpMethodOverride(HttpVerbs.Put)
-    <br />
+<h2>Editare utilizator</h2>
 
-    <i class="glyphicon glyphicon-envelope"></i>
-    @Html.Label("Email", "Email utilizator", new { @class = "" })
-    <br />
-    @Html.EditorFor(m => m.Email)
-    <br />
-    <br />
+<div class="container body-content" style="margin-top:20px;">
+    @using (Html.BeginForm(actionName: "Edit", controllerName: "Users", routeValues: new { id = @Model.Id }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Put)
+        <br />
 
-    <i class="glyphicon glyphicon-phone"></i>
-    @Html.Label("PhoneNumber", "Numar telefon")
-    <br />
-    @Html.EditorFor(m => m.PhoneNumber)
-    <br />
-    <br />
+        <i class="glyphicon glyphicon-envelope"></i>
+        @Html.Label("Email", "Email utilizator", new { @class = "" })
+        <br />
+        <div class="form-control2">
+            @Html.EditorFor(m => m.Email)
+        </div>
+        <br />
+        <br />
 
-    <i class="glyphicon glyphicon-th-list"></i>
-    <label>Selectati rolul</label>
-    @Html.DropDownList("newRole", new SelectList(Model.AllRoles, "Value", "Text", ViewBag.userRole), null, new { @class = "form-control" })
-    <br />
+        <i class="glyphicon glyphicon-phone"></i>
+        @Html.Label("PhoneNumber", "Numar telefon")
+        <br />
+        <div class="form-control2">
+            @Html.EditorFor(m => m.PhoneNumber)
+        </div>
+        <br />
+        <br />
 
-    <button class="btn btn-sm btn-success" type="submit">Modifica datele utilizatorului</button>
-}
+        <i class="glyphicon glyphicon-th-list"></i>
+        <label>Selectati rolul</label>
+        @Html.DropDownList("newRole", new SelectList(Model.AllRoles, "Value", "Text", ViewBag.userRole), null, new { @class = "form-control" })
+        <br />
 
+        <button class="btn btn-sm btn-success" type="submit">Modifica datele utilizatorului</button>
+    }
+</div>

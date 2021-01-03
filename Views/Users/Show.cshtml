@@ -4,26 +4,25 @@
     ViewBag.Title = "Detalii utilizator";
 }
 
-<ol class="breadcrumb">
-    <li><h3>@ViewBag.Title</h3></li>
-</ol>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
-<div class="panel-heading">Nume utilizator: @Model.UserName</div>
+<h1>@Model.UserName</h1>
 
-<div class="panel-body">
-
-    <i class="glyphicon glyphicon-envelope"></i> Email utilizator: <span class="label label-default">@Model.Email</span>
-    <br />
-    <i class="glyphicon glyphicon-th-list"></i> Rol utilizator: @ViewBag.roleName
-
-    <br /><br />
-
-    @if (@Model.PhoneNumber != null)
-    {
-        <i class="glyphicon glyphicon-phone"></i>@:Telefon utilizator:<span class="label label-default">@Model.PhoneNumber</span>
-    }
-
-</div>
+<ul class="list-group" style="margin-top:30px;">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Email utilizator: <span class="label label-default">@Model.Email</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Rol utilizator: <span class="label label-default">@ViewBag.roleName</span>
+</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        @if (@Model.PhoneNumber != null)
+        {
+            @:Telefon utilizator:<span class="label label-default">@Model.PhoneNumber</span>
+        }
+    </li>
+</ul>
 
 @if ((string)Model.Id != ViewBag.utilizatorCurent)
 {

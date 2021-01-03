@@ -13,7 +13,6 @@ namespace Task_Management_Platform.Models
 
         [Required(ErrorMessage = "Titlul task-ului este obligatoriu.")]
         [StringLength(100, ErrorMessage = "Titlul nu poate avea mai mult de 100 de caractre.")]
-        [DataType(DataType.MultilineText)]
         public string Title { get; set; }
 
         public string Description { get; set; }
@@ -41,9 +40,6 @@ namespace Task_Management_Platform.Models
             throw new NotImplementedException();
         }
         //Este asignat unui membru
-        public virtual ApplicationUser User2 { get; set; }
-
-        //un task este asignat unui membru
         public virtual ApplicationUser User2 { get; set; }
 
         //un task este creat de catre un organizator

@@ -3,27 +3,30 @@
     ViewBag.Title = "Edit";
 }
 
-<h1>@ViewBag.Message</h1>
+<br />
+<p class="text-success">@ViewBag.Message</p>
 
 <h2>Editare Comentariu</h2>
 
 @model Task_Management_Platform.Models.Comment
 
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Comments"))
-{
-    @Html.HttpMethodOverride(HttpVerbs.Put)
+<div class="container body-content" style="margin-top:20px;">
+    @using (Html.BeginForm(actionName: "Edit", controllerName: "Comments"))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Put)
 
-    @Html.Hidden("CommentsId")
+        @Html.Hidden("CommentsId")
 
-    @Html.Hidden("TaskId")
+        @Html.Hidden("TaskId")
 
-    @Html.Label("Content", "Continut comentariu")
-    <br />
-    @Html.Editor("Content")
-    <br />
-    @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
-    <br />
-    <br />
+        @Html.Label("Content", "Continut comentariu")
+        <br />
+        @Html.Editor("Content")
+        <br />
+        @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+        <br />
+        <br />
 
-    <button type="submit">Modifica comentariul</button>
-}
+        <button class="btn btn-success" type="submit">Modifica comentariul</button>
+    }
+</div>

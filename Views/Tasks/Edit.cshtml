@@ -10,53 +10,68 @@
 
 @model Task_Management_Platform.Models.Task
 
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Tasks"))
-{
-    @Html.HttpMethodOverride(HttpVerbs.Put)
-
-    @Html.HiddenFor(m => m.TaskId)
-    @Html.HiddenFor(m => m.TeamId)
-    @Html.HiddenFor(m => m.UserId)
-
-    @Html.Label("Title", "Titlu Task")
-    <br />
-    @Html.EditorFor(m => m.Title)
-    <br />
-    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
-    <br />
-    <br />
-
-    @Html.Label("Description", "Descriere task")
-    <br />
-    @Html.Editor("Description")
-    <br />
-    if (ViewBag.afisareButoane == true && (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
+<div class="container body-content" style="margin-top:20px;">
+    @using (Html.BeginForm(actionName: "Edit", controllerName: "Tasks"))
     {
-        @Html.Label("Status", "Status")
-        <br />
-        @Html.EditorFor(m => m.Status)
-        <br />
-    }
-    else
-    {
-        @Html.HiddenFor(m => m.Status)
-        <br />
-    }
-    @Html.Label("DataStart", "Inceput task")
-    <br />
-    @Html.Editor("DataStart");
-    <br />
-    @Html.ValidationMessageFor(m => m.DataStart, "", new { @class = "text-danger" })
-    <br />
-    <br />
+        @Html.HttpMethodOverride(HttpVerbs.Put)
 
-    @Html.Label("DataFin", "Termen limita task")
-    <br />
-    @Html.Editor("DataFin");
-    <br />
-    @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
-    <br />
-    <br />
+        @Html.HiddenFor(m => m.TaskId)
+        @Html.HiddenFor(m => m.TeamId)
+        @Html.HiddenFor(m => m.UserId)
 
-    <button class="btn btn-success" type="submit">Modifica task</button>
-}
+        @Html.Label("Title", "Titlu Task")
+        <br />
+        <div class="form-control2">
+            @Html.EditorFor(m => m.Title)
+            <br />
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+        </div>
+        <br />
+        <br />
+
+        @Html.Label("Description", "Descriere task")
+        <br />
+        <div class="form-control2">
+            @Html.Editor("Description")
+        </div>
+        <br />
+
+        if (ViewBag.afisareButoane == true && (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
+        {
+            @Html.Label("Status", "Status")
+            <br />
+            <div class="form-control2">
+                @Html.EditorFor(m => m.Status)
+            </div>
+            <br />
+        }
+        else
+        {
+            @Html.HiddenFor(m => m.Status)
+            <br />
+        }
+        <br />
+
+        @Html.Label("DataStart", "Inceput task")
+        <br />
+        <div class="form-control2">
+            @Html.Editor("DataStart")
+            <br />
+            @Html.ValidationMessageFor(m => m.DataStart, "", new { @class = "text-danger" })
+        </div>
+        <br />
+        <br />
+
+        @Html.Label("DataFin", "Termen limita task")
+        <br />
+        <div class="form-control2">
+            @Html.Editor("DataFin")
+            <br />
+            @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
+        </div>
+        <br />
+        <br />
+
+        <button class="btn btn-success" type="submit">Modifica task</button>
+    }
+</div>

@@ -39,9 +39,9 @@ namespace Task_Management_Platform.Controllers
         {
             try
             {
+                Comment comment = db.Comments.Find(id);
                 if (ModelState.IsValid)
                 {
-                    Comment comment = db.Comments.Find(id);
                     if (comment.UserId == User.Identity.GetUserId() || User.IsInRole("Admin"))
                     {
                         if (TryUpdateModel(comment))
@@ -49,19 +49,21 @@ namespace Task_Management_Platform.Controllers
                             comment.Content = editedComment.Content;
                             db.SaveChanges();
                         }
+                        TempData["message"] = "Comentariul a fost editat cu succes!";
                         return Redirect("/Tasks/Show/" + comment.TaskId);
                     }
                     else
                     {
                         TempData["message"] = "Nu aveti dreptul sa faceti modificari";
-                        return RedirectToAction("Index", "Tasks");
+                        return Redirect("/Tasks/Show/" + comment.TaskId);
                     }
                 }
-                return RedirectToAction("Index", "Tasks");
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari";
+                return Redirect("/Tasks/Show/" + comment.TaskId);
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Comentariul a fost modificat cu succes!";
+                ViewBag.Message = "Comentariul nu a putut fi editat!";
                 return View(editedComment);
             }
         }
