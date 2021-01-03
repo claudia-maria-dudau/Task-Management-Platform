@@ -15,6 +15,7 @@ namespace Task_Management_Platform.Models
         [StringLength(100, ErrorMessage = "Titlul nu poate avea mai mult de 100 de caractre.")]
         public string Title { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public string UserId { get; set; }
         public string UserId2 { get; set; }

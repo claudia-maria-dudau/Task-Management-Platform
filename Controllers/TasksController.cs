@@ -99,8 +99,17 @@ namespace Task_Management_Platform.Controllers
                     return Redirect("/Teams/Show/" + newTask.TeamId);
 
                 }
-               ViewBag.Message = "Nu s-a putut adauga task-ul!";
-                return View(newTask);
+
+                else
+                {
+                    ViewBag.Message = "Nu s-a putut adauga task-ul!";
+                    if (newTask.DataFin > newTask.DataStart)
+                    {
+                        ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                    }
+
+                    return View(newTask);
+                }
             }
             catch (Exception e)
             {
@@ -161,6 +170,11 @@ namespace Task_Management_Platform.Controllers
                 else
                 {
                     TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
+                    if (editedTask.DataFin > editedTask.DataStart)
+                    {
+                        ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                    }
+
                     return Redirect("/Teams/Show/" + editedTask.TeamId);
                 }
             }

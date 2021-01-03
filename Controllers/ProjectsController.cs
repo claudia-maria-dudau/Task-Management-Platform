@@ -44,9 +44,15 @@ namespace Task_Management_Platform.Controllers
                 TempData["message"] = "Proiectul a fost adaugat cu succes.";
                 db.SaveChanges();
                 return Redirect("/Teams/Show/" + project.TeamId);
-            }catch(Exception e)
+            }
+            catch(Exception e)
             {
                 ViewBag.Message = "Nu s-a putut adauga proiectul.";
+                if (project.Deadline > project.DataInceput)
+                {
+                    ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                }
+
                 return View(project);
             }
         }
@@ -100,6 +106,10 @@ namespace Task_Management_Platform.Controllers
                 else
                 {
                     TempData["message"] = "Nu aveti dreptul de a edita un proiect care nu va apartine!";
+                    if (projectNew.Deadline > projectNew.DataInceput)
+                    {
+                        ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                    }
                     return RedirectToAction("Index");
                 }
             }

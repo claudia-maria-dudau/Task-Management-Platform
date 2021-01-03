@@ -26,11 +26,8 @@
         <br />
         @Html.Label("Descriere")
         <br />
-        <div class="form-control2">
-
-            @Html.Editor("Descriere")
-            @Html.ValidationMessageFor(model => model.Descriere, null, new { @class = "text-danger " })
-        </div>
+        @Html.Editor("Descriere")
+        @Html.ValidationMessageFor(model => model.Descriere, null, new { @class = "text-danger " })
         <br />
         <br />
         @Html.Label("DataInceput", "Data Inceput")

@@ -14,6 +14,7 @@ namespace Task_Management_Platform.Models
         [StringLength(40, ErrorMessage = "Numele proiectului nu poate contine mai mult de 30 de caractere")]
         public string Nume { get; set; }
         [StringLength(500, ErrorMessage = "Descrierea proiectului nu trebuie sa depaseasca 500 de caractere")]
+        [DataType(DataType.MultilineText)]
         public string Descriere { get; set; }
         public int TeamId { get; set; }
         [Required(ErrorMessage = "Deadline-ul este obligatoriu")]

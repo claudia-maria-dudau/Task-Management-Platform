@@ -31,9 +31,7 @@
 
         @Html.Label("Description", "Descriere task")
         <br />
-        <div class="form-control2">
-            @Html.Editor("Description")
-        </div>
+        @Html.Editor("Description")
         <br />
 
         if (ViewBag.afisareButoane == true && (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
