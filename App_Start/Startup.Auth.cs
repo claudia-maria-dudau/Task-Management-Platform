@@ -57,7 +57,7 @@ namespace Task_Management_Platform
 
             app.UseFacebookAuthentication(
                appId: "313101526709768",
-               appSecret: "●●●●●●●●"
+               appSecret: "ca021b2609f17307ea97a3f9d22b7ec5"
                );
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()

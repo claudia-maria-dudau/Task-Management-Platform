@@ -151,12 +151,15 @@ namespace Task_Management_Platform.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email.Substring(0, model.Email.IndexOf('@')), Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // adaugare in rol de user
                     UserManager.AddToRole(user.Id, "User");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                    // trimitere mail
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -371,9 +374,9 @@ namespace Task_Management_Platform.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.UserName,
-                    Email = model.Email
+                    Email = model.Email,
                 };
-                
+
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
