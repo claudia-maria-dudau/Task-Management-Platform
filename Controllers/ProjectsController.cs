@@ -48,7 +48,7 @@ namespace Task_Management_Platform.Controllers
             catch(Exception e)
             {
                 ViewBag.Message = "Nu s-a putut adauga proiectul.";
-                if (project.Deadline > project.DataInceput)
+                if (project.Deadline < project.DataInceput)
                 {
                     ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
                 }
@@ -106,7 +106,7 @@ namespace Task_Management_Platform.Controllers
                 else
                 {
                     TempData["message"] = "Nu aveti dreptul de a edita un proiect care nu va apartine!";
-                    if (projectNew.Deadline > projectNew.DataInceput)
+                    if (projectNew.Deadline < projectNew.DataInceput)
                     {
                         ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
                     }
@@ -115,7 +115,12 @@ namespace Task_Management_Platform.Controllers
             }
             catch(Exception e)
             {
-                ViewBag.Message = "Nu s-a putut adauga proiectul.";
+                ViewBag.Message = "Nu s-a putut adauga proiectul";
+                if (projectNew.Deadline < projectNew.DataInceput)
+                {
+                    ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                }
+
                 return View(projectNew);
             }
             return View(projectNew);

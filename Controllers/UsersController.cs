@@ -210,6 +210,8 @@ namespace Task_Management_Platform.Controllers
             Team team = db.Teams.Find(id);
             var users = team.Users.OrderBy(u => u.UserName);
             var tasks = db.Teams.Find(id).Tasks;
+            ViewBag.esteOrganizator = User.IsInRole("Organizator");
+            ViewBag.esteAdmin = User.IsInRole("Admin");
 
             ViewBag.users = users;
             ViewBag.tasks = tasks;

@@ -4,37 +4,43 @@
 }
 
 
-<ol class="breadcrumb">
-    <li><h3>Afișare Membri</h3></li>
-</ol>
+<br />
+<p class="text-info">@ViewBag.Message</p>
+
+<h1>Membrii</h1>
 
 @foreach (var membr in ViewBag.users)
-{<hr />
-<div class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
+{
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
 
-        <p style="font-size:19px">
-            @membr.UserName
-            <div style="display: inline-block;margin-left:40rem;float : right">
-                <form method="post" action="/Teams/AdaugaTask/@membr.Id">
-                    @Html.HttpMethodOverride(HttpVerbs.Put)
+            <p style="font-size:19px">
+                @membr.UserName
 
-                    <select name="TaskId">
-                        @foreach (var task in ViewBag.tasks)
-                        {
-                            <option value="@task.TaskId">
-                                @task.Title
-                            </option>
-                        }
-                    </select>
+                @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+                {
+                    <div style="display: inline-block;margin-left:40rem;float : right">
+                        <form method="post" action="/Teams/AdaugaTask/@membr.Id">
+                            @Html.HttpMethodOverride(HttpVerbs.Put)
 
-                    <br />
-                    <button style="border: none; background: transparent" type="submit">Asigneaza task.</button>
-                </form>
-            </div>
-        </p>
+                            <select name="TaskId">
+                                @foreach (var task in ViewBag.tasks)
+                                {
+                                    <option value="@task.TaskId">
+                                        @task.Title
+                                    </option>
+                                }
+                            </select>
+
+                            <br />
+                            <button style="border: none; background: transparent" type="submit">Asigneaza task.</button>
+                        </form>
+                    </div>
+                }
+            </p>
+        </div>
     </div>
-</div>
 
 }

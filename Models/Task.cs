@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Task_Management_Platform.Models
 {
@@ -28,6 +29,8 @@ namespace Task_Management_Platform.Models
         public DateTime DataFin { get; set; }
         public int TeamId { get; set; }
 
+        //statusul posibil al unui task
+        public IEnumerable<SelectListItem> StatusOptions { get; set; }
 
         //foreign key
         //un task apartine unei echipe

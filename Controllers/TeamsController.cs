@@ -62,6 +62,7 @@ namespace Task_Management_Platform.Controllers
             task.User2 = user;
             user.Tasks.Add(task);
             db.SaveChanges();
+            TempData["message"] = "Task-ul a fost asignat cu succes!";
             return RedirectToAction("Show/" + task.TeamId);
         }
 
@@ -92,6 +93,7 @@ namespace Task_Management_Platform.Controllers
                     team.Users.Add(user);
                     user.Teams.Add(team);
                     db.SaveChanges();
+                    TempData["message"] = "EMembru adaugat cu succes!";
                 }
                 else TempData["message"] = "Este deja membru al echipei!";
                 return RedirectToAction("Show/" + id1);

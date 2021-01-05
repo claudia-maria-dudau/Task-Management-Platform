@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,12 +11,37 @@ namespace Task_Management_Platform.Controllers
     public class TasksController : Controller
     {
         private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+        
         [NonAction]
         private void SetAccessRights()
         {
             ViewBag.esteAdmin = User.IsInRole("Admin");
             ViewBag.esteOrganizator = User.IsInRole("Organizator");
+            ViewBag.esteMembru = User.IsInRole("Membru");
             ViewBag.utilizatorCurent = User.Identity.GetUserId();
+        }
+
+        [NonAction]
+        private IEnumerable<SelectListItem> getStatus()
+        {
+            var StatusList = new List<SelectListItem>();
+            StatusList.Add(new SelectListItem
+            {
+                Value = "Not Started",
+                Text = "Not Started"
+            });
+            StatusList.Add(new SelectListItem
+            {
+                Value = "In progress",
+                Text = "In progress"
+            });
+            StatusList.Add(new SelectListItem
+            {
+                Value = "Completed",
+                Text = "Completed"
+            });
+
+            return StatusList;
         }
 
         //SHOW
@@ -103,7 +129,7 @@ namespace Task_Management_Platform.Controllers
                 else
                 {
                     ViewBag.Message = "Nu s-a putut adauga task-ul!";
-                    if (newTask.DataFin > newTask.DataStart)
+                    if (newTask.DataFin < newTask.DataStart)
                     {
                         ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
                     }
@@ -114,6 +140,11 @@ namespace Task_Management_Platform.Controllers
             catch (Exception e)
             {
                 ViewBag.Message = "Nu s-a putut adauga task-ul!";
+                if (newTask.DataFin < newTask.DataStart)
+                {
+                    ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                }
+
                 return View(newTask);
             }
         }
@@ -121,35 +152,40 @@ namespace Task_Management_Platform.Controllers
         
         //EDIT
         //GET: afisare formular de editare task
-        [Authorize(Roles = "Organizator,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         public ActionResult Edit(int id)
         {
             Task task = db.Tasks.Find(id);
+            task.StatusOptions = getStatus();
 
-            if (User.Identity.GetUserId() == task.UserId || User.IsInRole("Admin"))
+            if (User.IsInRole("Organizator") || User.IsInRole("Admin") || User.IsInRole("Membru"))
             {
+                SetAccessRights();
+
                 return View(task);
             }
 
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
+                TempData["message"] = "Nu aveti dreptul sa modificati task-urile de la aceasta echipa!";
                 return Redirect("/Teams/Show/" + task.TeamId);
             }
         }
 
         //PUT: modificare task
-        [Authorize(Roles = "Organizator,Admin")]
+        [Authorize(Roles = "Membru,Organizator,Admin")]
         [HttpPut]
         public ActionResult Edit(int id, Task editedTask)
         {
             try
             {
-                if (User.Identity.GetUserId() == editedTask.UserId || User.IsInRole("Admin"))
+                if (User.IsInRole("Organizator") || User.IsInRole("Admin") || User.IsInRole("Membru"))
                 {
                     if (ModelState.IsValid)
                     {
+
                         Task task = db.Tasks.Find(id);
+                        task.StatusOptions = getStatus();
 
                         if (TryUpdateModel(task))
                         {
@@ -160,17 +196,24 @@ namespace Task_Management_Platform.Controllers
                             return Redirect("/Tasks/Show/" + id);
                         }
 
+                        SetAccessRights();
+                        editedTask.StatusOptions = getStatus();
+
                         ViewBag.Message = "Nu s-a putut edita task-ul!";
                         return View(editedTask);
                     }
+                    SetAccessRights();
+                    editedTask.StatusOptions = getStatus();
 
+                    ViewBag.Message = "Nu s-a putut edita task-ul!";
                     return View(editedTask);
                 }
 
                 else
                 {
-                    TempData["message"] = "Nu aveti dreptul sa modificati un task care nu va apartine!";
-                    if (editedTask.DataFin > editedTask.DataStart)
+
+                    TempData["message"] = "Nu aveti dreptul sa modificati un task-urile din aceasta echipa!";
+                    if (editedTask.DataFin < editedTask.DataStart)
                     {
                         ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
                     }
@@ -181,7 +224,15 @@ namespace Task_Management_Platform.Controllers
 
             catch (Exception e)
             {
+                SetAccessRights();
+                editedTask.StatusOptions = getStatus();
+                
                 ViewBag.Message = "Nu s-a putut edita task-ul!";
+                if (editedTask.DataFin < editedTask.DataStart)
+                {
+                    ViewBag.Message = "Data de inceput trebuie sa fie mai mica decat deadline-ul!";
+                }
+
                 return View(editedTask);
             }
         }

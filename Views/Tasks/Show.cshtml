@@ -4,7 +4,7 @@
 }
 
 <br />
-<p class="text-success">@ViewBag.Message</p>
+<p class="text-info">@ViewBag.Message</p>
 
 @model Task_Management_Platform.Models.Task
 <a href="/Teams/Show/@Model.TeamId">Inapoi la taskuri</a>
@@ -24,23 +24,23 @@
             <p>Asignat lui: @Model.User2.UserName</p>
             <br />
         }
-        <p class="lead" style="margin-top:2rem">
-            @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
-            {
-                <div style="display: inline-block; float : left; margin-right: 15px">
-                    <a class="btn btn-primary btn-lg" style="padding:1rem" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
-                </div>
+    <p class="lead" style="margin-top:2rem">
+        <div style="display: inline-block; float : left; margin-right: 15px">
+            <a class="btn btn-primary btn-lg" style="padding:1rem" href="/Tasks/Edit/@Model.TaskId">Modifica task</a>
+        </div>
 
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Tasks/Delete/@Model.TaskId">
-                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        @if (ViewBag.esteOrganizator || ViewBag.esteAdmin)
+        {
+            <div style="display: inline-block; float : left">
+                <form method="post" action="/Tasks/Delete/@Model.TaskId">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
 
-                        <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
-                    </form>
-                </div>
+                    <button class="btn btn-primary btn-lg" style="padding:1rem" type="submit">Sterge task</button>
+                </form>
+            </div>
 
-            }
-        </p>
+        }
+    </p>
     </div>
 
 </div>

@@ -4,7 +4,7 @@
 }
 
 <br />
-<p class="text-success">@ViewBag.Message</p>
+<p class="text-info">@ViewBag.Message</p>
 
 <h2>Modificare task</h2>
 
@@ -19,54 +19,54 @@
         @Html.HiddenFor(m => m.TeamId)
         @Html.HiddenFor(m => m.UserId)
 
-        @Html.Label("Title", "Titlu Task")
-        <br />
-        <div class="form-control2">
-            @Html.EditorFor(m => m.Title)
-            <br />
-            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
-        </div>
-        <br />
-        <br />
-
-        @Html.Label("Description", "Descriere task")
-        <br />
-        @Html.Editor("Description")
-        <br />
-
-        if (ViewBag.afisareButoane == true && (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
+        if (ViewBag.esteAdmin || Model.UserId == ViewBag.utilizatorCurent)
         {
-            @Html.Label("Status", "Status")
+            @Html.Label("Title", "Titlu Task")
             <br />
             <div class="form-control2">
-                @Html.EditorFor(m => m.Status)
+                @Html.EditorFor(m => m.Title)
+                <br />
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
             </div>
+            <br />
+            <br />
+
+            @Html.Label("Description", "Descriere task")
+            <br />
+            @Html.Editor("Description")
+            <br />
+
+            @Html.Label("DataStart", "Inceput task")
+            <br />
+            <div class="form-control2">
+                @Html.Editor("DataStart")
+                <br />
+                @Html.ValidationMessageFor(m => m.DataStart, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <br />
+
+            @Html.Label("DataFin", "Termen limita task")
+            <br />
+            <div class="form-control2">
+                @Html.Editor("DataFin")
+                <br />
+                @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
+            </div>
+            <br />
             <br />
         }
         else
         {
-            @Html.HiddenFor(m => m.Status)
-            <br />
+            @Html.HiddenFor(m => m.Title)
+            @Html.HiddenFor(m => m.Description)
+            @Html.HiddenFor(m => m.DataStart)
+            @Html.HiddenFor(m => m.DataFin)
         }
-        <br />
 
-        @Html.Label("DataStart", "Inceput task")
-        <br />
-        <div class="form-control2">
-            @Html.Editor("DataStart")
-            <br />
-            @Html.ValidationMessageFor(m => m.DataStart, "", new { @class = "text-danger" })
-        </div>
-        <br />
-        <br />
-
-        @Html.Label("DataFin", "Termen limita task")
-        <br />
-        <div class="form-control2">
-            @Html.Editor("DataFin")
-            <br />
-            @Html.ValidationMessageFor(m => m.DataFin, "", new { @class = "text-danger" })
-        </div>
+        @Html.Label("Status", "Status")
+        @Html.DropDownListFor(m => m.Status, new SelectList(Model.StatusOptions, "Value", "Text"), new { @class = "form-control" })
+        
         <br />
         <br />
 
